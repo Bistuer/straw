@@ -18,10 +18,6 @@ import java.util.List;
  */
 @Repository
 public interface UserMapper extends BaseMapper<User> {
-<<<<<<< HEAD
-    // hello 1
-=======
->>>>>>> origin/main
 
     //根据用户输入的用户名查询用户信息的方法
     @Select("select * from user where username=#{username}")
