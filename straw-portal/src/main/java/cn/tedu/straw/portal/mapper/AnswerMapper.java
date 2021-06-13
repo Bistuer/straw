@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * <p>
  * Mapper 接口
+ * BaseMapper是框架MybatisPlus提供的
  * </p>
  *
  * @author tedu.cn
