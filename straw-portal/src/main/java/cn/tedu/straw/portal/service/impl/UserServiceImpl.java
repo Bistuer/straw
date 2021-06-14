@@ -9,6 +9,7 @@ import cn.tedu.straw.portal.model.User;
 import cn.tedu.straw.portal.model.UserRole;
 import cn.tedu.straw.portal.service.IUserService;
 import cn.tedu.straw.portal.service.ServiceException;
+import cn.tedu.straw.portal.vo.R;
 import cn.tedu.straw.portal.vo.RegisterVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -136,5 +138,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             throw new ServiceException("服务器忙,稍后再试");
         }
     }
+
+
 
 }
