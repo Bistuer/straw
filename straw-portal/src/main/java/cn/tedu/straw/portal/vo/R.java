@@ -1,5 +1,6 @@
 package cn.tedu.straw.portal.vo;
 
+import cn.tedu.straw.portal.service.ServiceException;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -160,10 +161,10 @@ public class R<T> implements Serializable {
     /**
      * 将异常消息复制到返回结果中
      */
-//    public static R failed(ServiceException e){
-//        return new R().setCode(e.getCode())
-//                .setMessage(e.getMessage());
-//    }
+    public static R failed(ServiceException e){
+        return new R().setCode(e.getCode())
+                .setMessage(e.getMessage());
+    }
 
     /**
      * 服务器发生错误，用户将无法判断发出的请求是否成功。
