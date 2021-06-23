@@ -12,12 +12,15 @@
     <p v-text="message">VUE演示</p>
     <!-- content控制输入框里面的值    -->
     <input type="text" v-model="content">
+    <!-- 方法名叫:hello 需要在下面匹配methods -->
     <button type="button" v-on:click="hello">按钮</button>
 </div>
 </body>
 <script>
+
     //使用Vue
     let app = new Vue({
+        //绑定 div的id，只针对dic id="app"区域生效
         el: "#app",
         data: {
             message: "Vue发送的文字!",
@@ -30,5 +33,6 @@
             }
         }
     });
+
 </script>
 </html>
