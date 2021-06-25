@@ -5,9 +5,7 @@ let app = new Vue({
         phone:'',
         nickname:'',
         password:'',
-        confirm:'',
-        message: '',
-        hasError: false
+        confirm:''
     },
     methods:{
         register:function () {
@@ -21,11 +19,8 @@ let app = new Vue({
             }
             console.log(data);
             if(data.password !== data.confirm){
-                this.message = "确认密码不一致！";
-                this.hasError = true;
                 return;
             }
-            let _this = this;
             $.ajax({
                 url:"/register",
                 method: "POST",
@@ -35,12 +30,8 @@ let app = new Vue({
                     if(r.code == CREATED){
                         console.log("注册成功");
                         console.log(r.message);
-                        _this.hasError = false;
-                        location.href = '/login.html?register';
                     }else{
                         console.log(r.message);
-                        _this.hasError = true;
-                        _this.message = r.message;
                     }
                 }
             });

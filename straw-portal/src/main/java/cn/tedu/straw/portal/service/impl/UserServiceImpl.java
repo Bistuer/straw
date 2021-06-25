@@ -92,6 +92,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
         //根据输入的邀请码，查询班级验证邀请码有效性
         QueryWrapper<Classroom> queryWrapper = new QueryWrapper<>();
+        //eq就是equals的意思，意思就是左边 "invite_code"要等于registerVo.getInviteCode()
+        //invite_code 是数据库的列名
         queryWrapper.eq("invite_code", registerVo.getInviteCode());
         Classroom classroom = classroomMapper.selectOne(queryWrapper);
         //SpringBoot默认不加@Slf4j 也会包含log 但是功能不全，所以我们加上以避免下面报错
