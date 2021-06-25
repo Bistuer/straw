@@ -18,7 +18,7 @@
 </body>
 <script>
 
-    //使用Vue
+    //使用Vue ; let app是方法名 不是绑定div的id
     let app = new Vue({
         //绑定 div的id，只针对dic id="app"区域生效
         el: "#app",
@@ -27,6 +27,7 @@
             content: "输入框的内容"
         },
         methods: {
+            //hello 绑定 v-on:click="hello"  触发事件
             hello: function () {
                 console.log(this.content);
                 //this.content=this.content+"!";
