@@ -15,4 +15,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TagMapper extends BaseMapper<Tag> {
 
+
 }
