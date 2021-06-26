@@ -69,12 +69,12 @@
             <span aria-hidden="true">×</span>
           </button>
           <div id="myTab" role="tablist" class="nav nav-tabs">
-              <a href="#commentNotice" class="nav-item nav-link active text-black" data-toggle="tab" aria-controls="commentNotice" aria-selected="true">
-                通知
-              </a>
-              <a href="#announcement" class="nav-item nav-link text-black" data-toggle="tab" aria-controls="announcement" aria-selected="true">
-                公告
-              </a>
+            <a href="#commentNotice" class="nav-item nav-link active text-black" data-toggle="tab" aria-controls="commentNotice" aria-selected="true">
+              通知
+            </a>
+            <a href="#announcement" class="nav-item nav-link text-black" data-toggle="tab" aria-controls="announcement" aria-selected="true">
+              公告
+            </a>
 
           </div>
           <div id="myTabContent" class="tab-content col-12">
@@ -163,7 +163,13 @@
 <div class="container-fluid"  th:fragment="tags_nav" >
   <div class="nav font-weight-light" id="tagsApp">
     <a href="tag/tag_question.html" class="nav-item nav-link text-info"><small>全部</small></a>
-    <a href="tag/tag_question.html" class="nav-item nav-link text-info"><small>Java基础</small></a>
+    <!-- v-for 循环中in左侧是随意起的变量名,会在循环体中使用
+            in右侧的变量名,绑定这VUE代码中的变量-->
+    <a href="tag/tag_question.html"
+       class="nav-item nav-link text-info"
+       v-for="tag in tags">
+      <small v-text="tag.name">Java基础</small>
+    </a>
   </div>
 </div>
 
@@ -178,7 +184,7 @@
               抱歉您还没有提问内容， <a href="question/create.html" class="alert-link">您可以点击此处提问</a>，或者点击标签查看其它问答
             </div>
           </div>
-          <div class="media bg-white m-2 p-3" >
+          <div class="media bg-white m-2 p-3" v-for="question in questions" >
             <div class="media-body w-50">
               <div class="row">
                 <div class="col-md-12 col-lg-2">
@@ -188,7 +194,8 @@
                 </div>
                 <div class="col-md-12 col-lg-10">
                   <h5 class="mt-0 mb-1 text-truncate">
-                    <a class="text-dark" href="question/detail.html" >
+                    <a class="text-dark" href="question/detail.html"
+                       v-text="question.title">
                       eclipse 如何导入项目？
                     </a>
                   </h5>
@@ -196,7 +203,7 @@
               </div>
 
               <div class="font-weight-light text-truncate text-wrap text-justify mb-2" style="height: 70px;">
-                <p>
+                <p v-html="question.content">
                   eclipse 如何导入项目？
                 </p>
               </div>
@@ -209,8 +216,10 @@
               <div class="row">
                 <div class="col-12 text-right">
                   <div class="list-inline mb-1 ">
-                    <small class="list-inline-item" >风继续吹</small>
-                    <small class="list-inline-item"><span>12</span>浏览</small>
+                    <small class="list-inline-item"
+                           v-text="question.nickname">风继续吹</small>
+                    <small class="list-inline-item">
+                      <span v-text="question.pageViews">12</span>浏览</small>
                     <small class="list-inline-item" >13分钟前</small>
                   </div>
                 </div>
@@ -243,22 +252,22 @@
           <h5 class="card-header">陈某</h5>
           <div class="card-body">
             <div class="list-inline mb-1 ">
-                <a class="list-inline-item mx-3 my-1 text-center">
-                  <div><strong>10</strong></div>
-                  <div>回答</div>
-                </a>
-                <a class="list-inline-item mx-3 my-1 text-center" href="personal/myQuestion.html">
-                  <div><strong>10</strong></div>
-                  <div>提问</div>
-                </a>
-                <a class="list-inline-item mx-3 my-1 text-center" href="personal/collect.html">
-                  <div><strong>10</strong></div>
-                  <div>收藏</div>
-                </a>
-                <a class="list-inline-item mx-3 my-1 text-center" href="personal/task.html">
-                  <div><strong>10</strong></div>
-                  <div>任务</div>
-                </a>
+              <a class="list-inline-item mx-3 my-1 text-center">
+                <div><strong>10</strong></div>
+                <div>回答</div>
+              </a>
+              <a class="list-inline-item mx-3 my-1 text-center" href="personal/myQuestion.html">
+                <div><strong>10</strong></div>
+                <div>提问</div>
+              </a>
+              <a class="list-inline-item mx-3 my-1 text-center" href="personal/collect.html">
+                <div><strong>10</strong></div>
+                <div>收藏</div>
+              </a>
+              <a class="list-inline-item mx-3 my-1 text-center" href="personal/task.html">
+                <div><strong>10</strong></div>
+                <div>任务</div>
+              </a>
             </div>
           </div>
         </div>
@@ -458,4 +467,7 @@
   </p>
 </footer>
 </body>
+<script src="js/utils.js"></script>
+<script src="js/index.js"></script>
+<script src="js/tags_nav.js"></script>
 </html>

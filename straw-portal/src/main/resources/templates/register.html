@@ -26,47 +26,44 @@
       <div class="bg-white p-4" id="app">
 
         <p class="text-center"><b>注册新用户</b></p>
-        <!-- 加上 d-block:true  style的样式会显示出来 display:none失效  ; v-bind 绑定一个值      -->
-        <div id="error" class="alert alert-danger " style="display: none" v-bind:class="{'d-block':hasError}">
-          <i class="fa fa-exclamation-triangle"></i> <span v-text="message" >邀请码错误！</span>
+
+        <div id="error" class="alert alert-danger"
+             style="display: none"
+             v-bind:class="{'d-block':hasError}">
+          <i class="fa fa-exclamation-triangle"></i>
+          <span v-text="message">邀请码错误！</span>
         </div>
-
-        <!-- v-on:submit=""  表单提交 不需要method;  v-on:submit.prevent=""是阻止提交表单 -->
-        <form action="/register" method="post" v-on:submit.prevent="register">
-
+        <!--v-on:submit.prevent表示绑定一个方法 ,.prevent阻止表单提交 -->
+        <form action="/register" method="post"
+              v-on:submit.prevent="register">
           <div class="form-group has-icon">
             <input type="text" name="inviteCode" class="form-control" placeholder="请输入邀请码"
-             <!--required="required" 表示必填 -->
                    required="required" v-model="inviteCode">
             <span class="fa fa-barcode form-control-icon"></span>
           </div>
-
           <div class="form-group has-icon">
             <input type="tel" name="phone" class="form-control" placeholder="请输入手机号"
-                   pattern="^\d{11}$" required="required" v-model="phone">
+                   pattern="^\d{11}$" required="required" v-model="phone" >
             <span class=" fa fa-phone form-control-icon"></span>
           </div>
 
           <div class="form-group has-icon">
             <input type="text" name="nickname" class="form-control" placeholder="请设置昵称，字数为2-20之间"
-                   pattern="^.{2,20}$" required="required" v-model="nickname">
+                   pattern="^.{2,20}$" required="required" v-model="nickname" >
             <span class="fa fa-user form-control-icon"></span>
           </div>
 
           <div class="form-group has-icon">
             <input type="password" name="password" class="form-control" placeholder="设置密码6-20个字母、数字、下划线"
-                   required="required" pattern="^\w{6,20}$" v-model="password" >
+                   required="required" pattern="^\w{6,20}$" v-model="password"  >
             <span class="fa fa-lock form-control-icon"></span>
           </div>
-
           <div class="form-group has-icon">
             <input type="password" name="confirm" class="form-control" placeholder="请再次输入密码"
-                   required="required" v-model="confirm" >
+                   required="required"  v-model="confirm">
             <span class="fa fa-lock form-control-icon"></span>
           </div>
-
           <button type="submit" class="btn btn-primary btn-block btn-flat" >注册</button>
-
         </form>
 
         <a href="login.html" class="text-center d-inline-block mt-3">已有账号，立即登录</a>
