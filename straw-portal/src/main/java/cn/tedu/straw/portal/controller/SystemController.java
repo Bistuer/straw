@@ -6,6 +6,8 @@ import cn.tedu.straw.portal.vo.R;
 import cn.tedu.straw.portal.vo.RegisterVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,10 +56,20 @@ public class SystemController {
     /**
      * @param registerVo
      * @return R
+     * @Validated 验证registerVo 是否符合类中成员变量上面的注解
+     * BindingResult validaResult 上面注解的结果会赋值给validaResult 是固定用法
      * @Date 2021/06/14
      */
     @PostMapping("/register")
-    public R registerStudent(RegisterVo registerVo) {
+    public R registerStudent(@Validated RegisterVo registerVo, BindingResult validaResult) {
+        //在控制器调用业务逻辑前，先判断BindingResult对象中是否有错误
+        if (validaResult.hasErrors()) {
+            //如果验证结果中包含任何错误信息，进入这个if
+            //获得其中的一个错误信息显示，一般是按顺序第一个错误信息
+            String error = validaResult.getFieldError().getDefaultMessage();
+            return R.unproecsableEntity(error);
+        }
+
         System.out.println(registerVo);
         //{}是占位符，会将后面的registerVo数据放到{}中
         log.debug("得到信息为:{}", registerVo);

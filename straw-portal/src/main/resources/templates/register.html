@@ -26,9 +26,9 @@
       <div class="bg-white p-4" id="app">
 
         <p class="text-center"><b>注册新用户</b></p>
-
-        <div id="error" class="alert alert-danger" style="display: none">
-          <i class="fa fa-exclamation-triangle"></i> <span >邀请码错误！</span>
+        <!-- 加上 d-block:true  style的样式会显示出来 display:none失效  ; v-bind 绑定一个值      -->
+        <div id="error" class="alert alert-danger " style="display: none" v-bind:class="{'d-block':hasError}">
+          <i class="fa fa-exclamation-triangle"></i> <span v-text="message" >邀请码错误！</span>
         </div>
 
         <!-- v-on:submit=""  表单提交 不需要method;  v-on:submit.prevent=""是阻止提交表单 -->
@@ -36,6 +36,7 @@
 
           <div class="form-group has-icon">
             <input type="text" name="inviteCode" class="form-control" placeholder="请输入邀请码"
+             <!--required="required" 表示必填 -->
                    required="required" v-model="inviteCode">
             <span class="fa fa-barcode form-control-icon"></span>
           </div>

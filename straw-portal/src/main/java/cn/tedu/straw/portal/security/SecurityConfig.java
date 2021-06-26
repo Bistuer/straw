@@ -70,7 +70,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()//对当前全部请求进行授权
                 .antMatchers(
-                        "/index.html",
                         "/img/*",
                         "/js/*",
                         "/css/*",

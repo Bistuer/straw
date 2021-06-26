@@ -1,14 +1,17 @@
 let app = new Vue({
-    el:'#app',
-    data:{
-        inviteCode:'',
-        phone:'',
-        nickname:'',
-        password:'',
-        confirm:''
+    el: '#app',
+    data: {
+        inviteCode: '',
+        phone: '',
+        nickname: '',
+        password: '',
+        confirm: '',
+        message: '',
+        hasError: false
     },
-    methods:{
-        register:function () {
+    methods: {
+        // <form action="/register" method="post" v-on:submit.prevent="register">
+        register: function () {
             console.log('Submit');
             let data = {
                 inviteCode: this.inviteCode,
@@ -18,23 +21,32 @@ let app = new Vue({
                 confirm: this.confirm
             }
             console.log(data);
-            if(data.password !== data.confirm){
+            if (data.password !== data.confirm) {
+                this.message = "两次密码输入不一致";
+                this.hasError = true;
                 return;
             }
+
             $.ajax({
-                url:"/register",
+                url: "/register",
                 method: "POST",
                 data: data,
                 success: function (r) {
                     console.log(r);
-                    if(r.code == CREATED){
+                    if (r.code == CREATED) {
                         console.log("注册成功");
                         console.log(r.message);
-                    }else{
+                        //注册成功，可以直接跳转到页面;   location.search == "?register"看login.html
+                        location.href="/login.html?register";
+                    } else {
                         console.log(r.message);
+                        //如果注册失败将信息显示在信息Div中
+                        app.message = r.message;
+                        app.hasError = true;
                     }
                 }
             });
+
         }
     }
 });
