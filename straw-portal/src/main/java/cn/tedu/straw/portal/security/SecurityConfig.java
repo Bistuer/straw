@@ -22,12 +22,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     //密码中设定了算法ID 下面的注入就省略了
 
-    //注入一个加密对象
+   /* //注入一个加密对象
     @Bean
     public PasswordEncoder passwordEncoder() {
         //这个加密对象使用BCrypt加密内容
         return new BCryptPasswordEncoder();
-    }
+    }*/
 
 
     @Autowired(required = false)
