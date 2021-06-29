@@ -35,4 +35,10 @@ public interface IUserService extends IService<User> {
      */
     void registerStudent(RegisterVo registerVo);
 
+    /**
+     * 从Spring-security中获得当前登录用户的用户名的方法
+     * @return String
+     */
+    String currentUsername();
+
 }

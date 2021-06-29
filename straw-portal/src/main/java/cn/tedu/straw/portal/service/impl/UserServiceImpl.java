@@ -9,16 +9,17 @@ import cn.tedu.straw.portal.model.User;
 import cn.tedu.straw.portal.model.UserRole;
 import cn.tedu.straw.portal.service.IUserService;
 import cn.tedu.straw.portal.service.ServiceException;
-import cn.tedu.straw.portal.vo.R;
 import cn.tedu.straw.portal.vo.RegisterVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -141,6 +142,28 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
     }
 
+    /**
+     * 获取当前用户的信息，获得登录用户的username
+     * 主要是为了后续index页面中用户查询自己的question
+     *
+     * @return
+     */
+    @Override
+    public String currentUsername() {
+        //利用Spring-Security框架获得当前登录用户信息
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+        //判断当前用户有没有登录，如果没有抛出异常
+        //只要不是匿名用户就行 ; AnonymousAuthenticationToken是匿名用户令牌
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            //上面的代码是判断当前用户的抽象权限类型是不是匿名用户
+            //如果不是匿名用户，就是登录的用户，只有登录的用户才能返回用户名
+            String username = authentication.getName();
+            return username;
+        }
+        //没运行上面的if证明用户没有登录，抛出异常即可
+        throw ServiceException.notFound("没有登录");
+    }
 
 
 }
