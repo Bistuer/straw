@@ -6,7 +6,9 @@ let app = new Vue({
         nickname: '',
         password: '',
         confirm: '',
+        //这里message绑定的是register.html中<span v-text="message">邀请码错误！</span>
         message: '',
+        //绑定 v-bind:class="{'d-block':hasError}">
         hasError: false
     },
     methods: {
@@ -30,6 +32,7 @@ let app = new Vue({
             $.ajax({
                 url: "/register",
                 method: "POST",
+                //这个data是上面 let data的data
                 data: data,
                 success: function (r) {
                     console.log(r);

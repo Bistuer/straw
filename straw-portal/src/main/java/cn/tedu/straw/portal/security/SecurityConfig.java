@@ -14,14 +14,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 /**
  * @author fanzhen
  * @Configuration表示当前类是配置类，可能向Spring容器中注入对象
- * @EnableGlobalMethodSecurity(prePostEnabled = true) 表示通知Spring-Security开启权限管理功能
+ * @EnableGlobalMethodSecurity(prePostEnabled = true) 表示通知Spring-Security开启权限管理功能，就是像拦截器那样的功能
  */
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     //密码中设定了算法ID 下面的注入就省略了
-
    /* //注入一个加密对象
     @Bean
     public PasswordEncoder passwordEncoder() {

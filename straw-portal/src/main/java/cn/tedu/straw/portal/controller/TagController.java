@@ -20,6 +20,11 @@ import java.util.List;
  */
 
 /**
+ * 在 Spring Boot 中，接口返回 JSON 格式的数据很简单，
+ * 在 Controller 中使用 @RestController 注解即可返回 JSON 格式的数据。
+ *
+ * @RestController 注解包含了原来的 @Controller 和 @ResponseBody注解。
+ * <p>
  * 下面的注解表示想访问本控制器中的任何方法需要前缀/v1/tags
  * 这个v1开头的格式是后期微服务的标准名为RESTful
  */
@@ -31,7 +36,8 @@ public class TagController {
     private ITagService tagService;
 
     /**
-     * 查询所有标签@GetMapping("")表示使用类上声明的前缀就可以访问这个方法
+     * 查询所有标签@GetMapping("")表示使用类上声明的前缀就可以访问这个方法就是 /v1/tags就可以访问这个方法
+     *
      * @Date 2021/06/26
      */
     @GetMapping("")

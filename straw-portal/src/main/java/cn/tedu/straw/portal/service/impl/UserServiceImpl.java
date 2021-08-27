@@ -22,6 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,9 +73,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 .User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
-                //写==1是判断锁定
+                //写==1是判断锁定  0是正常
                 .accountLocked(user.getLocked() == 1)
-                //写==0是判断不可用
+                //写==0是判断不可用   1是正常
                 .disabled(user.getEnabled() == 0)
                 .authorities(auths).build();
         //最后返回UserDetails对象
@@ -96,7 +97,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         //eq就是equals的意思，意思就是左边 "invite_code"要等于registerVo.getInviteCode()
         //invite_code 是数据库的列名
         queryWrapper.eq("invite_code", registerVo.getInviteCode());
-        Classroom classroom = classroomMapper.selectOne(queryWrapper);
+            Classroom classroom = classroomMapper.selectOne(queryWrapper);
         //SpringBoot默认不加@Slf4j 也会包含log 但是功能不全，所以我们加上以避免下面报错
         log.debug("邀请码对应的班级为:{}", classroom);
         if (classroom == null) {

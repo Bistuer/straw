@@ -23,6 +23,4 @@ public class HomeController {
         return new ModelAndView("index");
     }
 
-
-
 }

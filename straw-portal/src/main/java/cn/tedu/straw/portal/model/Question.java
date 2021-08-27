@@ -2,18 +2,25 @@ package cn.tedu.straw.portal.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
+
 import java.time.LocalDate;
+
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.time.LocalDateTime;
+
 import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.io.Serializable;
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author tedu.cn
@@ -87,5 +94,11 @@ public class Question implements Serializable {
     @TableField("tag_names")
     private String tagNames;
 
-
+    /**
+     * 为问题实体类添加标签集合
+     *
+     * @TableField(exist = false) 表示数据库中不存在这个列不需要去找，防止报错
+     */
+    @TableField(exist = false)
+    private List<Tag> tags;
 }

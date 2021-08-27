@@ -58,7 +58,7 @@ public class SystemController {
      * @return R
      * @Validated 验证registerVo 是否符合类中成员变量上面的注解 就是@NotBlank(message = "昵称不能为空")，
      * @Pattern(regexp = "^.{2,20}$", message = "昵称在2到20位之间") 这些注解
-     * BindingResult validaResult 上面注解的结果会赋值给validaResult 是固定用法
+     * BindingResult validaResult 上面注解的验证结果会赋值给validaResult 是固定用法
      * @Date 2021/06/14
      */
     @PostMapping("/register")

@@ -14,8 +14,10 @@
     <name>straw</name>
     <description>Demo project for Spring Boot</description>
 
+    <!--自己加的表示当前项目既不打jar包 也不打war包 就是pom文件    -->
     <packaging>pom</packaging>
 
+    <!--父子相认    -->
     <modules>
         <module>straw-portal</module>
         <module>straw-generator</module>
@@ -28,6 +30,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--    父项目中有这个依赖,子项目创建的时候会自动导入这个依赖        -->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>

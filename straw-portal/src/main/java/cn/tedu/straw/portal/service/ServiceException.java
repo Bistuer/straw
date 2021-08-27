@@ -89,7 +89,7 @@ public class ServiceException extends RuntimeException implements Serializable {
     }
 
     /**
-     * 422 Unprocesable entity - [POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误。
+         * 422 Unprocesable entity - [POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误。
      */
     public static ServiceException unprocesabelEntity(String message) {
         return new ServiceException(message, R.UNPROCESABLE_ENTITY);

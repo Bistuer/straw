@@ -6,6 +6,8 @@ import cn.tedu.straw.portal.service.IUserRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+
 /**
  * <p>
  *  服务实现类
@@ -16,5 +18,5 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> implements IUserRoleService {
-
+    
 }
