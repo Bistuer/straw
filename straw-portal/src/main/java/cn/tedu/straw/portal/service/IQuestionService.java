@@ -1,6 +1,7 @@
 package cn.tedu.straw.portal.service;
 
 import cn.tedu.straw.portal.model.Question;
+import cn.tedu.straw.portal.vo.QuestionVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
 
@@ -23,4 +24,11 @@ public interface IQuestionService extends IService<Question> {
      */
     PageInfo<Question> getMyQuestions(Integer pageNum, Integer pageSize);
 
+    /**
+     * 保存用户发布信息的方法
+     *
+     * @param questionVo 问题的实体类
+     * @return void
+     */
+    void saveQuestiton(QuestionVo questionVo);
 }

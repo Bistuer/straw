@@ -1,14 +1,17 @@
 package cn.tedu.straw.portal.service.impl;
 
+import cn.tedu.straw.portal.mapper.QuestionTagMapper;
 import cn.tedu.straw.portal.mapper.UserMapper;
 import cn.tedu.straw.portal.model.Question;
 import cn.tedu.straw.portal.mapper.QuestionMapper;
+import cn.tedu.straw.portal.model.QuestionTag;
 import cn.tedu.straw.portal.model.Tag;
 import cn.tedu.straw.portal.model.User;
 import cn.tedu.straw.portal.service.IQuestionService;
 import cn.tedu.straw.portal.service.ITagService;
 import cn.tedu.straw.portal.service.IUserService;
 import cn.tedu.straw.portal.service.ServiceException;
+import cn.tedu.straw.portal.vo.QuestionVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -17,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +43,8 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     UserMapper userMapper;
     @Autowired
     QuestionMapper questionMapper;
+    @Autowired
+    QuestionTagMapper questionTagMapper;
 
     /**
      * 按登录用户查询当前用户问题的方法
@@ -89,6 +95,64 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         return new PageInfo<Question>(list);
     }
 
+    /**
+     * 保存用户发布信息的方法
+     *
+     * @param questionVo 问题的实体类
+     * @return void
+     */
+    @Override
+    public void saveQuestiton(QuestionVo questionVo) {
+        log.debug("收到问题数据{}", questionVo);
+        // 获取当前登录用户信息(可以验证登录情况)
+        String username = userService.currentUsername();
+        User user = userMapper.findUserByUsername(username);
+        // 将该问题包含的标签拼接成字符串以","分割 以便添加tag_names列
+        StringBuilder bud = new StringBuilder();
+        for (String tag : questionVo.getTagNames()) {
+            bud.append(tag).append(",");
+        }
+        //删除最后一个","
+        bud.deleteCharAt(bud.length() - 1);
+        String tagNames = bud.toString();
+        // 构造Question对象
+        Question question = new Question()
+                .setTitle(questionVo.getTitle())
+                .setContent(questionVo.getContent())
+                .setUserId(user.getId())
+                .setUserNickName(user.getUsername())
+                .setTagNames(tagNames)
+                .setCreatetime(LocalDateTime.now())
+                .setStatus(0)
+                .setPageViews(0)
+                .setPublicStatus(0)
+                .setDeleteStatus(0);
+        // 新增Question对象
+        int num = questionMapper.insert(question);
+        if (num != 1) {
+            throw new ServiceException("服务器忙!");
+        }
+        log.debug("保存了对象:{}", question);
+        // 处理新增的Question和对应Tag的关系
+        Map<String, Tag> name2TagMap = tagService.getName2TagMap();
+        for (String tagName : questionVo.getTagNames()) {
+            //根据本次循环的标签名称获得对应的标签对象
+            Tag tag = name2TagMap.get(tagName);
+            //构建QuestionTag实体类对象
+            QuestionTag questionTag = new QuestionTag()
+                    .setQuestionId(question.getId())
+                    .setTagId(tag.getId());
+            //执行新增
+            num = questionTagMapper.insert(questionTag);
+            if (num != 1) {
+                throw new ServiceException("数据库忙!");
+            }
+            log.debug("新增了问题和标签的关系:{}", questionTag);
+        }
+
+        // 处理新增的Question和对应User(老师)的关系
+    }
+
 
     @Autowired
     ITagService tagService;
@@ -110,7 +174,6 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
             //将这个value保存在list对象中
             list.add(tag);
         }
-
         return list;
     }
 

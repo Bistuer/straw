@@ -186,6 +186,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     /**
      * 查询所有老师 user表中 type = 1的是老师
+     *
      * @return List<User>
      */
     @Override
@@ -208,6 +209,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             }
         }
         return masters;
+    }
+
+    /**
+     * 查询所有老师用户的方法
+     *
+     * @param
+     * @return Map<String, User>
+     */
+    @Override
+    public Map<String, User> getMasterMap() {
+        if (masterMap.isEmpty()) {
+            getMasters();
+        }
+        return masterMap;
     }
 
 }
