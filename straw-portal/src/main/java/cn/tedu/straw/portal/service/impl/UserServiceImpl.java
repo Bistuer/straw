@@ -22,8 +22,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * <p>
@@ -97,7 +98,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         //eq就是equals的意思，意思就是左边 "invite_code"要等于registerVo.getInviteCode()
         //invite_code 是数据库的列名
         queryWrapper.eq("invite_code", registerVo.getInviteCode());
-            Classroom classroom = classroomMapper.selectOne(queryWrapper);
+        Classroom classroom = classroomMapper.selectOne(queryWrapper);
         //SpringBoot默认不加@Slf4j 也会包含log 但是功能不全，所以我们加上以避免下面报错
         log.debug("邀请码对应的班级为:{}", classroom);
         if (classroom == null) {
@@ -166,5 +167,47 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         throw ServiceException.notFound("没有登录");
     }
 
+    private final List<User> masters = new CopyOnWriteArrayList<>();
+    private final Map<String, User> masterMap = new ConcurrentHashMap<>();
+    private final Timer timer = new Timer();
+
+    //初始化块:在构造方法运行前开始运行
+    {
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                synchronized (masters) {
+                    masters.clear();
+                    masterMap.clear();
+                }
+            }
+        }, 1000 * 60 * 30, 1000 * 60 * 30);
+    }
+
+    /**
+     * 查询所有老师 user表中 type = 1的是老师
+     * @return List<User>
+     */
+    @Override
+    public List<User> getMasters() {
+        if (masters.isEmpty()) {
+            synchronized (masters) {
+                if (masters.isEmpty()) {
+                    QueryWrapper<User> query = new QueryWrapper<>();
+                    query.eq("type", 1);
+                    //将所有老师缓存masters集合中
+                    masters.addAll(userMapper.selectList(query));
+                    for (User u : masters) {
+                        masterMap.put(u.getNickname(), u);
+                    }
+                    //脱敏:将敏感信息从数组(集合\map)中移除
+                    for (User u : masters) {
+                        u.setPassword("");
+                    }
+                }
+            }
+        }
+        return masters;
+    }
 
 }

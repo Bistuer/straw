@@ -32,6 +32,135 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
      */
     private final Map<String, Tag> map = new ConcurrentHashMap<>();
 
+    /**
+     * {
+     *   "code": 200,
+     *   "message": "OK",
+     *   "data": [
+     *     {
+     *       "id": 1,
+     *       "name": "Java基础",
+     *       "createby": "admin",
+     *       "createtime": "2020-03-09T14:39:48"
+     *     },
+     *     {
+     *       "id": 2,
+     *       "name": "Java OOP",
+     *       "createby": "admin",
+     *       "createtime": "2020-03-09T23:30:09"
+     *     },
+     *     {
+     *       "id": 3,
+     *       "name": "Java SE",
+     *       "createby": "admin",
+     *       "createtime": "2020-03-09T23:32:13"
+     *     },
+     *     {
+     *       "id": 4,
+     *       "name": "WebServer",
+     *       "createby": "admin",
+     *       "createtime": "2020-03-09T23:32:50"
+     *     },
+     *     {
+     *       "id": 5,
+     *       "name": "二进制",
+     *       "createby": "admin",
+     *       "createtime": "2020-03-09T23:33:18"
+     *     },
+     *     {
+     *       "id": 6,
+     *       "name": "Web",
+     *       "createby": "admin",
+     *       "createtime": "2020-03-09T23:33:58"
+     *     },
+     *     {
+     *       "id": 7,
+     *       "name": "MySQL",
+     *       "createby": "admin",
+     *       "createtime": "2020-03-09T23:34:20"
+     *     },
+     *     {
+     *       "id": 8,
+     *       "name": "Servlet",
+     *       "createby": "admin",
+     *       "createtime": "2020-03-09T23:34:40"
+     *     },
+     *     {
+     *       "id": 9,
+     *       "name": "Spring",
+     *       "createby": "admin",
+     *       "createtime": "2020-03-09T23:34:58"
+     *     },
+     *     {
+     *       "id": 10,
+     *       "name": "SpringMVC",
+     *       "createby": "admin",
+     *       "createtime": "2020-03-09T23:35:17"
+     *     },
+     *     {
+     *       "id": 11,
+     *       "name": "MyBatis",
+     *       "createby": "admin",
+     *       "createtime": "2020-03-09T23:35:38"
+     *     },
+     *     {
+     *       "id": 12,
+     *       "name": "Ajax",
+     *       "createby": "admin",
+     *       "createtime": "2020-03-09T23:36:02"
+     *     },
+     *     {
+     *       "id": 13,
+     *       "name": "SpringBoot",
+     *       "createby": "admin",
+     *       "createtime": "2020-03-09T23:36:22"
+     *     },
+     *     {
+     *       "id": 14,
+     *       "name": "SpringCloud",
+     *       "createby": "admin",
+     *       "createtime": "2020-03-09T23:36:43"
+     *     },
+     *     {
+     *       "id": 15,
+     *       "name": "面试题",
+     *       "createby": "admin",
+     *       "createtime": "2020-03-09T23:37:28"
+     *     },
+     *     {
+     *       "id": 16,
+     *       "name": "搜索引擎",
+     *       "createby": "admin",
+     *       "createtime": "2020-03-09T23:40:47"
+     *     },
+     *     {
+     *       "id": 17,
+     *       "name": "Docker",
+     *       "createby": "admin",
+     *       "createtime": "2020-03-10T17:19:05"
+     *     },
+     *     {
+     *       "id": 18,
+     *       "name": "Linux",
+     *       "createby": "admin",
+     *       "createtime": "2020-03-16T14:44:04"
+     *     },
+     *     {
+     *       "id": 19,
+     *       "name": "CentOS",
+     *       "createby": "admin",
+     *       "createtime": "2020-03-16T14:44:22"
+     *     },
+     *     {
+     *       "id": 20,
+     *       "name": "Dubbo",
+     *       "createby": "admin",
+     *       "createtime": "2020-03-19T09:52:09"
+     *     }
+     *   ]
+     * }
+     * @return
+     */
     @Override
     public List<Tag> getTags() {
         //这个if主要是为了保证tags被顺利赋值之后的高效运行
@@ -45,6 +174,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
                     for (Tag t : tags) {
                         //将tag中所有标签赋值给map
                         //而map的key是tag的name,value就是tag
+                        //map结果:如JAVA基础(key) value:1,java基础,admin,2020-03-09 14:39:48
                         map.put(t.getName(), t);
                     }
                 }

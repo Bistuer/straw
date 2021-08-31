@@ -2,6 +2,7 @@ package cn.tedu.straw.portal.service;
 
 import cn.tedu.straw.portal.model.Question;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -17,8 +18,9 @@ public interface IQuestionService extends IService<Question> {
 
     /**
      * 按登录用户查询当前用户问题的方法
+     *
      * @Return List<Question>
      */
-    List<Question> getMyQuestions();
+    PageInfo<Question> getMyQuestions(Integer pageNum, Integer pageSize);
 
 }

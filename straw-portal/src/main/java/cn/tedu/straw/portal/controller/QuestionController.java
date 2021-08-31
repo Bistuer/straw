@@ -5,6 +5,7 @@ import cn.tedu.straw.portal.model.Question;
 import cn.tedu.straw.portal.service.IQuestionService;
 import cn.tedu.straw.portal.service.ServiceException;
 import cn.tedu.straw.portal.vo.R;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,14 +35,19 @@ public class QuestionController {
      * 查询返回当前登录用户发布的问题
      */
     @GetMapping("/my")
-    public R<List<Question>> my() {
-        log.debug("开始查询当前用户的问题！");
-        //这里要处理一个异常，因为用户可能没有登录
+    public R<PageInfo<Question>> my(Integer pageNum) {
+        if (pageNum == null) {
+            pageNum = 1;
+        }
+        int pageSize = 8;
+        log.debug("开始查询当前用户的问题");
+        //这里要处理个异常,因为用户可能没有登录
         try {
-            List<Question> questions = questionService.getMyQuestions();
+            PageInfo<Question> questions =
+                    questionService.getMyQuestions(pageNum, pageSize);
             return R.ok(questions);
         } catch (ServiceException e) {
-            log.error("用户查询问题失败！", e);
+            log.error("用户查询问题失败!", e);
             return R.failed(e);
         }
     }

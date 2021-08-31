@@ -209,7 +209,9 @@
               <div class="row">
                 <div class="col-12 mt-1 text-info">
                   <i class="fa fa-tags" aria-hidden="true"></i>
-                  <a class="text-info badge badge-pill bg-light" href="tag/tag_question.html"><small >Java基础 &nbsp;</small></a>
+                  <a class="text-info badge badge-pill bg-light" href="tag/tag_question.html" v-for="tag in question.tags" >
+                    <small v-text="tag.name">Java基础 &nbsp;</small>
+                  </a>
                 </div>
               </div>
               <div class="row">
@@ -226,15 +228,28 @@
 
             </div>
             <!-- / class="media-body"-->
-            <img src="img/tags/example0.jpg"  class="ml-3 border img-fluid rounded" alt="" width="208" height="116">
+            <img src="img/tags/example0.jpg"
+                 v-bind:src="question.tagImage"
+                 class="ml-3 border img-fluid rounded"
+                 alt="" width="208" height="116">
           </div>
           <div class="row mt-2">
             <div class="col-6 offset-3">
               <nav aria-label="Page navigation example">
                 <div class="pagination">
-                  <a class="page-item page-link" href="#" >上一页</a>
-                  <a class="page-item page-link " href="#" >1</a>
-                  <a class="page-item page-link" href="#" >下一页</a>
+                  <!--   prevent阻止href提交   -->
+                  <a class="page-item page-link" href="#"
+                  v-on:click.prevent="loadQuestions(pageInfo.prePage)"
+                  >上一页</a>
+                  <!--循环拿到页数数字                     -->
+                  <a class="page-item page-link " href="#"
+                  v-for=" n in pageInfo.navigatepageNums"
+                  v-on:click.prevent="loadQuestions(n)"
+                  v-bind:class="{'bg-secondary text-light':n == pageInfo.pageNum}"
+                  ><span v-text="n">1</span></a>
+                  <a class="page-item page-link" href="#"
+                  v-on:click.prevent="loadQuestions(pageInfo.nextPage)"
+                  >下一页</a>
                 </div>
               </nav>
             </div>

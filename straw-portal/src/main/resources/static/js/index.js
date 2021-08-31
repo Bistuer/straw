@@ -4,20 +4,31 @@
 let questionsApp = new Vue({
     el: '#questionsApp',
     data: {
-        questions: []
+        questions: [],
+        pageInfo: {}
     },
     methods: {
-        loadQuestions: function () {
+        loadQuestions: function (pageNum) {
+            //判断pageNum是否是1,如果pageNum为空,默认页码为1
+            if (!pageNum) {
+                pageNum = 1;
+            }
             $.ajax({
                 url: '/v1/questions/my',
                 method: "GET",
+                //前面的pageNum: 是QuestionController my(Integer pageNum)的pageNum
+                data: {pageNum: pageNum},
                 success: function (r) {
                     console.log("成功加载数据");
                     console.log(r);
                     if (r.code === OK) {
-                        questionsApp.questions = r.data;
+                        questionsApp.questions = r.data.list;
                         //调用计算持续时间的方法
                         questionsApp.updateDuration();
+                        //调用显示所有按标签呈现的图片
+                        questionsApp.updateTagImage();
+
+                        questionsApp.pageInfo = r.data;
                     }
                 }
             });
@@ -25,10 +36,14 @@ let questionsApp = new Vue({
         updateTagImage: function () {
             let questions = this.questions;
             for (let i = 0; i < questions.length; i++) {
+                //获得当前问题对象的所有标签的集合(数组)
                 let tags = questions[i].tags;
+                //js代码中特有的写法,相当于判断tags非空 if(tags) => if(tags!=null)
                 if (tags) {
                     let tagImage = '/img/tags/' + tags[0].id + '.jpg';
                     console.log(tagImage);
+                    // questions[i].tagImage = tagImage; 中的tagImage是自己定义的
+                    // 将这个文件路径保存到tagImage属性用，以便页面调用
                     questions[i].tagImage = tagImage;
                 }
             }

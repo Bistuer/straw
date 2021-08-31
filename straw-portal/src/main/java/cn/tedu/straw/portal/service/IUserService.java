@@ -5,6 +5,8 @@ import cn.tedu.straw.portal.vo.RegisterVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.List;
+
 /**
  * <p>
  * 服务类
@@ -41,4 +43,9 @@ public interface IUserService extends IService<User> {
      */
     String currentUsername();
 
+    /**
+     * 查询所有老师 user表中 type = 1的是老师
+     * @return List<User>
+     */
+    List<User> getMasters();
 }

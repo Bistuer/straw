@@ -26,10 +26,17 @@
     <properties>
         <java.version>1.8</java.version>
         <mybatis.plus.version>3.3.1</mybatis.plus.version>
+        <pagehelper.starter.version>1.3.0</pagehelper.starter.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!--翻页的依赖 pagehelper -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.starter.version}</version>
+            </dependency>
             <!--    父项目中有这个依赖,子项目创建的时候会自动导入这个依赖        -->
             <dependency>
                 <groupId>com.baomidou</groupId>
