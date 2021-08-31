@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -32,6 +33,7 @@ public interface IUserService extends IService<User> {
 
     /**
      * 用户注册的方法(现在是针对学生注册)
+     *
      * @param registerVo
      * @return void
      */
@@ -39,13 +41,24 @@ public interface IUserService extends IService<User> {
 
     /**
      * 从Spring-security中获得当前登录用户的用户名的方法
+     *
      * @return String
      */
     String currentUsername();
 
     /**
      * 查询所有老师 user表中 type = 1的是老师
+     *
+     * @param
      * @return List<User>
      */
     List<User> getMasters();
+
+    /**
+     * 查询所有老师用户的方法
+     *
+     * @param
+     * @return Map<String, User>
+     */
+    Map<String, User> getMasterMap();
 }
