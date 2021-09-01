@@ -30,5 +30,5 @@ public interface IQuestionService extends IService<Question> {
      * @param questionVo 问题的实体类
      * @return void
      */
-    void saveQuestiton(QuestionVo questionVo);
+    void saveQuestion(QuestionVo questionVo);
 }

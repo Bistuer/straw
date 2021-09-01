@@ -2,11 +2,9 @@ package cn.tedu.straw.portal.service.impl;
 
 import cn.tedu.straw.portal.mapper.QuestionTagMapper;
 import cn.tedu.straw.portal.mapper.UserMapper;
-import cn.tedu.straw.portal.model.Question;
+import cn.tedu.straw.portal.mapper.UserQuestionMapper;
+import cn.tedu.straw.portal.model.*;
 import cn.tedu.straw.portal.mapper.QuestionMapper;
-import cn.tedu.straw.portal.model.QuestionTag;
-import cn.tedu.straw.portal.model.Tag;
-import cn.tedu.straw.portal.model.User;
 import cn.tedu.straw.portal.service.IQuestionService;
 import cn.tedu.straw.portal.service.ITagService;
 import cn.tedu.straw.portal.service.IUserService;
@@ -19,6 +17,7 @@ import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -45,6 +44,8 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     QuestionMapper questionMapper;
     @Autowired
     QuestionTagMapper questionTagMapper;
+    @Autowired
+    UserQuestionMapper userQuestionMapper;
 
     /**
      * 按登录用户查询当前用户问题的方法
@@ -101,8 +102,9 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
      * @param questionVo 问题的实体类
      * @return void
      */
+    @Transactional
     @Override
-    public void saveQuestiton(QuestionVo questionVo) {
+    public void saveQuestion(QuestionVo questionVo) {
         log.debug("收到问题数据{}", questionVo);
         // 获取当前登录用户信息(可以验证登录情况)
         String username = userService.currentUsername();
@@ -120,7 +122,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
                 .setTitle(questionVo.getTitle())
                 .setContent(questionVo.getContent())
                 .setUserId(user.getId())
-                .setUserNickName(user.getUsername())
+                .setUserNickName(user.getNickname())
                 .setTagNames(tagNames)
                 .setCreatetime(LocalDateTime.now())
                 .setStatus(0)
@@ -151,6 +153,23 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         }
 
         // 处理新增的Question和对应User(老师)的关系
+        Map<String, User> masterMap = userService.getMasterMap();
+        for (String masterName : questionVo.getTeacherNickNames()) {
+            //根据本次循环的讲师名称获得对应的讲师对象
+            User uu = masterMap.get(masterName);
+            //构建QuestionTag实体类对象
+            UserQuestion userQuestion = new UserQuestion()
+                    .setQuestionId(question.getId())
+                    .setUserId(uu.getId())
+                    .setCreatetime(LocalDateTime.now());
+            //执行新增
+            num = userQuestionMapper.insert(userQuestion);
+            if (num != 1) {
+                throw new ServiceException("数据库忙!");
+            }
+            log.debug("新增了问题和讲师的关系:{}", userQuestion);
+        }
+
     }
 
 

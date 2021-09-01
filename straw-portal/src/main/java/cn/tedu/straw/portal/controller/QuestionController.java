@@ -85,6 +85,8 @@ public class QuestionController {
         }
         //这里应该将vo对象交由service层去新增
         log.debug("接收到表单数据{}", questionVo);
+        //存储问题
+        questionService.saveQuestion(questionVo);
         return R.ok("发布成功!");
     }
 
