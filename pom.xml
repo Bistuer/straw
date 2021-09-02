@@ -21,6 +21,7 @@
     <modules>
         <module>straw-portal</module>
         <module>straw-generator</module>
+        <module>straw-resource</module>
     </modules>
 
     <properties>
