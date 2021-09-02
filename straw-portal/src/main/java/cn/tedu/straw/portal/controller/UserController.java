@@ -4,6 +4,7 @@ package cn.tedu.straw.portal.controller;
 import cn.tedu.straw.portal.model.User;
 import cn.tedu.straw.portal.service.IUserService;
 import cn.tedu.straw.portal.vo.R;
+import cn.tedu.straw.portal.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,4 +35,14 @@ public class UserController {
         return R.ok(masters);
     }
 
+    /**
+     * 显示用户信息面板的控制层方法
+     *
+     * @return R<UserVo>
+     */
+    @GetMapping("/me")
+    public R<UserVo> me() {
+        UserVo user = userService.currentUserVo();
+        return R.ok(user);
+    }
 }

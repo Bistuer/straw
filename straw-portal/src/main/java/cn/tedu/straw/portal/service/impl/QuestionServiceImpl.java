@@ -172,6 +172,22 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
 
     }
 
+    /**
+     * 通过用户的id查询问题的数量
+     *
+     * @param userId 用户id
+     * @return Integer 返回问题的数量
+     */
+    @Override
+    public Integer countQuestionsByUserId(Integer userId) {
+        //使用QueryWrapper查询数量的方法
+        QueryWrapper<Question> query = new QueryWrapper<>();
+        query.eq("user_id", userId);
+        query.eq("delete_status", 0);
+        Integer count = questionMapper.selectCount(query);
+        return count;
+    }
+
 
     @Autowired
     ITagService tagService;

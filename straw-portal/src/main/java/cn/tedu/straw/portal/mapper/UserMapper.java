@@ -2,6 +2,7 @@ package cn.tedu.straw.portal.mapper;
 
 import cn.tedu.straw.portal.model.Permission;
 import cn.tedu.straw.portal.model.User;
+import cn.tedu.straw.portal.vo.UserVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -21,11 +22,22 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<User> {
 
 
-    //根据用户输入的用户名查询用户信息的方法
+    /**
+     * 根据用户输入的用户名查询用户信息的方法
+     *
+     * @param username
+     * @return User
+     */
     @Select("select * from user where username=#{username}")
     User findUserByUsername(String username);
 
-    //查询指定id的用户的所有权限
+
+    /**
+     * 查询指定id的用户的所有权限
+     *
+     * @param id
+     * @return List<Permission>
+     */
     @Select("SELECT p.id,p.name" +
             " FROM user u" +
             " LEFT JOIN user_role ur ON u.id=ur.user_id" +
@@ -35,4 +47,12 @@ public interface UserMapper extends BaseMapper<User> {
             " WHERE u.id=#{id}")
     List<Permission> findUserPermissionsById(Integer id);
 
+    /**
+     * 从user表中根据用户名username 查找 id,username,nickname
+     *
+     * @param username
+     * @return UserVo
+     */
+    @Select("select id,username,nickname from user where username = #{username}")
+    UserVo findUserVoByUsername(String username);
 }

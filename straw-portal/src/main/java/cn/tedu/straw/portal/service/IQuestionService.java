@@ -31,4 +31,12 @@ public interface IQuestionService extends IService<Question> {
      * @return void
      */
     void saveQuestion(QuestionVo questionVo);
+
+    /**
+     * 通过用户的id查询问题的数量
+     *
+     * @param userId 用户id
+     * @return Integer 返回问题的数量
+     */
+    Integer countQuestionsByUserId(Integer userId);
 }

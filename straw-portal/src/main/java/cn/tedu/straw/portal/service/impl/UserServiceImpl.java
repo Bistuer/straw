@@ -7,9 +7,11 @@ import cn.tedu.straw.portal.model.Classroom;
 import cn.tedu.straw.portal.model.Permission;
 import cn.tedu.straw.portal.model.User;
 import cn.tedu.straw.portal.model.UserRole;
+import cn.tedu.straw.portal.service.IQuestionService;
 import cn.tedu.straw.portal.service.IUserService;
 import cn.tedu.straw.portal.service.ServiceException;
 import cn.tedu.straw.portal.vo.RegisterVo;
+import cn.tedu.straw.portal.vo.UserVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +46,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     ClassroomMapper classroomMapper;
     @Autowired
     UserRoleMapper userRoleMapper;
+    @Autowired
+    IQuestionService questionService;
+
 
     /**
      * 用户密码不能明文输入
@@ -148,7 +153,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * 获取当前用户的信息，获得登录用户的username
      * 主要是为了后续index页面中用户查询自己的question
      *
-     * @return
+     * @return username当前登录用户的用户名
      */
     @Override
     public String currentUsername() {
@@ -223,6 +228,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             getMasters();
         }
         return masterMap;
+    }
+
+    /**
+     * 查询当前登录用户信息面板的方法
+     *
+     * @return UserVo
+     */
+    @Override
+    public UserVo currentUserVo() {
+        //获得登录用户名
+        String username = currentUsername();
+        //获得当前对象基本信息
+        UserVo user = userMapper.findUserVoByUsername(username);
+        Integer questions = questionService.countQuestionsByUserId(user.getId());
+        //用户收藏数信息未做!!!
+        return user;
     }
 
 }

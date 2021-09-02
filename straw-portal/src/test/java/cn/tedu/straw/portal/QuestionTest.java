@@ -1,7 +1,9 @@
 package cn.tedu.straw.portal;
 
+import cn.tedu.straw.portal.mapper.UserMapper;
 import cn.tedu.straw.portal.model.Question;
 import cn.tedu.straw.portal.service.IQuestionService;
+import cn.tedu.straw.portal.vo.UserVo;
 import com.github.pagehelper.PageInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,4 +27,15 @@ public class QuestionTest {
             System.out.println(q);
         }
     }
+
+    @Autowired
+    UserMapper userMapper;
+
+    @Test
+    public void testUser(){
+        UserVo userVo = userMapper.findUserVoByUsername("st2");
+        System.out.println(userVo);
+    }
+
+
 }

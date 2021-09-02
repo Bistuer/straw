@@ -2,6 +2,7 @@ package cn.tedu.straw.portal.service;
 
 import cn.tedu.straw.portal.model.User;
 import cn.tedu.straw.portal.vo.RegisterVo;
+import cn.tedu.straw.portal.vo.UserVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -61,4 +62,13 @@ public interface IUserService extends IService<User> {
      * @return Map<String, User>
      */
     Map<String, User> getMasterMap();
+
+    /**
+     * 查询当前登录用户信息面板的方法
+     *
+     * @return UserVo
+     */
+    UserVo currentUserVo();
+
+
 }
