@@ -2,6 +2,7 @@ package cn.tedu.straw.portal;
 
 import cn.tedu.straw.portal.mapper.UserMapper;
 import cn.tedu.straw.portal.model.Question;
+import cn.tedu.straw.portal.model.Role;
 import cn.tedu.straw.portal.service.IQuestionService;
 import cn.tedu.straw.portal.vo.UserVo;
 import com.github.pagehelper.PageInfo;
@@ -9,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
+
+import java.util.List;
 
 @SpringBootTest
 public class QuestionTest {
@@ -37,5 +40,12 @@ public class QuestionTest {
         System.out.println(userVo);
     }
 
+    @Test
+    public void roles(){
+        List<Role> list = userMapper.findUserRolesById(1);
+        for (Role role:list) {
+            System.out.println(role);
+        }
+    }
 
 }

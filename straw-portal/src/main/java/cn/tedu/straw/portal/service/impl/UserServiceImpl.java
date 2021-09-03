@@ -3,10 +3,7 @@ package cn.tedu.straw.portal.service.impl;
 import cn.tedu.straw.portal.mapper.ClassroomMapper;
 import cn.tedu.straw.portal.mapper.UserMapper;
 import cn.tedu.straw.portal.mapper.UserRoleMapper;
-import cn.tedu.straw.portal.model.Classroom;
-import cn.tedu.straw.portal.model.Permission;
-import cn.tedu.straw.portal.model.User;
-import cn.tedu.straw.portal.model.UserRole;
+import cn.tedu.straw.portal.model.*;
 import cn.tedu.straw.portal.service.IQuestionService;
 import cn.tedu.straw.portal.service.IUserService;
 import cn.tedu.straw.portal.service.ServiceException;
@@ -73,6 +70,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         String[] auths = new String[permissions.size()];
         for (int i = 0; i < auths.length; i++) {
             auths[i] = permissions.get(i).getName();
+        }
+        //读取用户所有角色
+        List<Role> roles = userMapper.findUserRolesById(user.getId());
+        int j = auths.length;
+        //扩容上面的数组
+        auths = Arrays.copyOf(auths, auths.length + roles.size());
+        //向数组内容中赋值
+        for (Role r : roles) {
+            auths[j] = r.getName();
+            j++;
         }
         //创建UserDetails对象,并为他赋值
         UserDetails ud = org.springframework.security.core.userdetails
@@ -242,6 +249,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         //获得当前对象基本信息
         UserVo user = userMapper.findUserVoByUsername(username);
         Integer questions = questionService.countQuestionsByUserId(user.getId());
+        user.setQuestions(questions);
         //用户收藏数信息未做!!!
         return user;
     }

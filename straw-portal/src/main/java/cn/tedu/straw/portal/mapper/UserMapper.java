@@ -1,6 +1,7 @@
 package cn.tedu.straw.portal.mapper;
 
 import cn.tedu.straw.portal.model.Permission;
+import cn.tedu.straw.portal.model.Role;
 import cn.tedu.straw.portal.model.User;
 import cn.tedu.straw.portal.vo.UserVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -46,6 +47,19 @@ public interface UserMapper extends BaseMapper<User> {
             " LEFT JOIN permission p ON p.id=rp.permission_id" +
             " WHERE u.id=#{id}")
     List<Permission> findUserPermissionsById(Integer id);
+
+    /**
+     * 按用户的id查询用户的所有角色
+     *
+     * @param id
+     * @return List<Role>
+     */
+    @Select("select r.id,r.name " +
+            "from user u " +
+            "left join user_role ur on u.id = ur.user_id " +
+            "left join role r on r.id = ur.role_id " +
+            "where u.id = #{userId}")
+    List<Role> findUserRolesById(Integer id);
 
     /**
      * 从user表中根据用户名username 查找 id,username,nickname
