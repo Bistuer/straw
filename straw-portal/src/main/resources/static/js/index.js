@@ -5,7 +5,9 @@ let questionsApp = new Vue({
     el: '#questionsApp',
     data: {
         questions: [],
-        pageInfo: {}
+        pageInfo: {},
+        style:"fa-comments-o",
+        navTitle:"我的问答"
     },
     methods: {
         loadQuestions: function (pageNum) {

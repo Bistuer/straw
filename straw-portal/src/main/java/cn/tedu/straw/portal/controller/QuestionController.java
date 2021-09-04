@@ -9,13 +9,12 @@ import cn.tedu.straw.portal.vo.R;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -88,6 +87,53 @@ public class QuestionController {
         //存储问题
         questionService.saveQuestion(questionVo);
         return R.ok("发布成功!");
+    }
+
+    /**
+     * 处理讲师获得分页问题列表的方法
+     * 这个方法需要特殊权限才能访问
+     * AuthenticationPrincipal 注解后面跟Spring-Security的User类型参数 (如上面的STUDENT TEACHER)
+     * 表示需要Spring-Security将当前登录用户的权限信息赋值给User对象
+     *
+     * @param user
+     * @param pageNum
+     * @return R<PageInfo < Question>>
+     */
+    @GetMapping("/teacher")
+    @PreAuthorize("hasRole('ROLE_TEACHER')")
+    public R<PageInfo<Question>> teachers(
+            //声明权限是为了获得用户名的
+            @AuthenticationPrincipal User user,
+            Integer pageNum) {
+        if (pageNum == null) {
+            pageNum = 1;
+        }
+        Integer pageSize = 8;
+        //调用业务逻辑层的方法
+        PageInfo<Question> pageInfo = questionService.getQuestionsByTeacherName(user.getUsername(), pageNum, pageSize);
+        return R.ok(pageInfo);
+
+    }
+
+    /**
+     * 显示问题详细的Controller方法
+     * 为了遵守RESTful的风格这个位置的路径比较特殊
+     * 例如:/v1/questions/12
+     * 上面的路径SpringMvc会自动将12赋值给{id}
+     *
+     * @param id
+     * @return
+     * @PathVariable标记的同名属性的值也会是12
+     */
+    @GetMapping("/{id}")
+    public R<Question> question(@PathVariable Integer id) {
+        //判断必须要有id
+        if (id == null) {
+            return R.invalidRequest("ID不能为空");
+        }
+        Question question = questionService.getQuestionById(id);
+        return R.ok(question);
+
     }
 
 }

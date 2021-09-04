@@ -176,8 +176,12 @@
   <div class="row">
     <div class="col-md-12 col-lg-8 pb-2">
       <div class="row">
-        <div class="container-fluid" id="questionsApp">
-          <h4 class="border-bottom m-2 p-2 font-weight-light"><i class="fa fa-comments-o" aria-hidden="true"></i> 我的问答</h4>
+        <div class="container-fluid" id="questionsApp" th:fragment="questions_app">
+          <h4 class="border-bottom m-2 p-2 font-weight-light">
+            <i class="fa"
+               v-bind:class="style"
+               aria-hidden="true"></i>
+            <span v-text="navTitle">我的问答</span></h4>
           <div class="row" style="display: none">
             <div class="alert alert-warning w-100" role="alert">
               抱歉您还没有提问内容， <a href="question/create.html" class="alert-link">您可以点击此处提问</a>，或者点击标签查看其它问答
@@ -201,6 +205,7 @@
                 <div class="col-md-12 col-lg-10">
                   <h5 class="mt-0 mb-1 text-truncate">
                     <a class="text-dark" href="question/detail.html"
+                       v-bind:href="'/question/detail.html?'+question.id"
                        v-text="question.title">
                       eclipse 如何导入项目？
                     </a>

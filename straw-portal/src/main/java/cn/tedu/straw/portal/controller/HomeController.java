@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 /**
- * 对应index.html的控制类
+ * 负责除了登录和注册页面的所有其他页面的显示
  *
  * @author fanzhen
  * @Date 2021.06.26
@@ -48,7 +48,6 @@ public class HomeController {
         return null;
     }
 
-
     /**
      * 显示学生问题发布页面
      */
@@ -57,6 +56,15 @@ public class HomeController {
         //return new ModelAndView("question/create"); 返回的是templates目录下的question/create
         return new ModelAndView("question/create");
     }
+
+    /**
+     * 显示问题详情页面
+     */
+    @GetMapping("/question/detail.html")
+    public ModelAndView detail() {
+        return new ModelAndView("question/detail");
+    }
+
 
 //    //    临时显示讲师主页的控制器方法
 //    @GetMapping("/index_teacher.html")

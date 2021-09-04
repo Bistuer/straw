@@ -1,5 +1,6 @@
 package cn.tedu.straw.portal;
 
+import cn.tedu.straw.portal.mapper.QuestionMapper;
 import cn.tedu.straw.portal.mapper.UserMapper;
 import cn.tedu.straw.portal.model.Question;
 import cn.tedu.straw.portal.model.Role;
@@ -45,6 +46,18 @@ public class QuestionTest {
         List<Role> list = userMapper.findUserRolesById(1);
         for (Role role:list) {
             System.out.println(role);
+        }
+    }
+
+    @Autowired
+    QuestionMapper questionMapper;
+
+    @Test
+    public void teacherQuestions(){
+        List<Question> list=
+                questionMapper.findTeachersQuestions(3);
+        for(Question question:list){
+            System.out.println(question);
         }
     }
 

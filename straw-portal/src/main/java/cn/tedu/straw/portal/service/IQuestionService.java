@@ -39,4 +39,24 @@ public interface IQuestionService extends IService<Question> {
      * @return Integer 返回问题的数量
      */
     Integer countQuestionsByUserId(Integer userId);
+
+
+    /**
+     * 分页查询当前登录的老师问题的方法
+     *
+     * @param username
+     * @param pageNum
+     * @param pageSize
+     * @return PageInfo<Question>
+     */
+    PageInfo<Question> getQuestionsByTeacherName(String username, Integer pageNum, Integer pageSize);
+
+    /**
+     * 按id查询问题详情的方法
+     *
+     * @param id
+     * @return Question
+     */
+    Question getQuestionById(Integer id);
+
 }

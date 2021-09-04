@@ -188,6 +188,53 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         return count;
     }
 
+    /**
+     * 分页查询当前登录的老师问题的方法
+     *
+     * @param username
+     * @param pageNum
+     * @param pageSize
+     * @return PageInfo<Question>
+     */
+    @Override
+    public PageInfo<Question> getQuestionsByTeacherName(String username, Integer pageNum, Integer pageSize) {
+        if (pageNum == null) {
+            pageNum = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 8;
+        }
+
+        //根据用户名查询用户对象
+        User user = userMapper.findUserByUsername(username);
+        //设置分页查询
+        PageHelper.startPage(pageNum, pageSize);
+        List<Question> questions = questionMapper.findTeachersQuestions(user.getId());
+        //别忘了,要将问题列中的标签字符串转成标签的List
+        for (Question q : questions) {
+            List<Tag> tags = tagNamesToTags(q.getTagNames());
+            q.setTags(tags);
+        }
+        return new PageInfo<Question>(questions);
+    }
+
+    /**
+     * 按id查询问题详情的方法
+     *
+     * @param id
+     * @return Question
+     */
+    @Override
+    public Question getQuestionById(Integer id) {
+        //先按id查询出Question
+        Question question = questionMapper.selectById(id);
+        //再按Question的tag_names列的标签转换为List<Tag>
+        List<Tag> tags = tagNamesToTags(question.getTagNames());
+        //将转换完成的List<Tag>保存到这个Question的tags属性中
+        question.setTags(tags);
+        return question;
+    }
+
 
     @Autowired
     ITagService tagService;
