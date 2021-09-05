@@ -173,4 +173,15 @@ public class R<T> implements Serializable {
         return new R().setCode(INTERNAL_SERVER_ERROR)
                 .setMessage(e.getMessage());
     }
+
+    /**
+     * 新增成功,并且需要获得新增成功对象时使用这个方法
+     *
+     * @param data
+     * @return
+     */
+    public static R created(Object data) {
+        return new R().setCode(CREATED).setMessage("创建成功")
+                .setData(data);
+    }
 }

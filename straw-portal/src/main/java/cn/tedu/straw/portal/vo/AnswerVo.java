@@ -8,6 +8,8 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
+ * 完成讲师回复问题功能创建AnswerVo
+ *
  * @author fanzhen
  */
 @Data

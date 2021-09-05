@@ -18,43 +18,18 @@ let questionApp = new Vue({
             questionId = questionId.substring(1);
             //发送异步请求
             $.ajax({
-                url: "/v1/questions/" + questionId, //v1/questions/15
+                url: "/v1/questions/" + questionId,//v1/questions/15
                 method: "get",
                 success: function (r) {
                     console.log(r);
                     if (r.code == OK) {
                         questionApp.question = r.data;
-                        questionApp.updateDuration();
+                        addDuration(questionApp.question);
                     } else {
                         alert(r.message);
                     }
                 }
             })
-        },
-        updateDuration: function () {
-            //获得问题中的创建时间属性(毫秒数)
-            let createtime = new Date(this.question.createtime).getTime();
-            //获得当前时间的毫秒数
-            let now = new Date().getTime();
-            //计算时间差(秒)
-            let durtaion = (now - createtime) / 1000;
-            if (durtaion < 60) {
-                // 显示刚刚
-                //duration这个名字可以随便起,只要保证和页面上取的一样就行
-                this.question.duration = "刚刚";
-            } else if (durtaion < 60 * 60) {
-                // 显示XX分钟
-                this.question.duration =
-                    (durtaion / 60).toFixed(0) + "分钟前";
-            } else if (durtaion < 60 * 60 * 24) {
-                //显示XX小时
-                this.question.duration =
-                    (durtaion / 60 / 60).toFixed(0) + "小时前";
-            } else {
-                //显示XX天
-                this.question.duration =
-                    (durtaion / 60 / 60 / 24).toFixed(0) + "天前";
-            }
         }
     },
     created: function () {
@@ -138,8 +113,19 @@ let postAnswerApp = new Vue({
                 data: data,
                 success: function (r) {
                     if (r.code == CREATED) {
+                        let answer = r.data;    //这个r.data就是新增的回答
+                        //将这个问题的持续时间计算出来
+                        addDuration(answer);
+                        //将新增的方法插入到anwsers数组的后面
+                        answersApp.answers.push(answer);
+                        //回答已经显示,清空富文本编辑器中的内容
+                        $("#summernote").summernote("reset");
                         postAnswerApp.message = r.message;
                         postAnswerApp.hasError = true;
+                        //2秒中之后信息消失
+                        setTimeout(function () {
+                            postAnswerApp.hasError = false;
+                        }, 2000);
                     } else {
                         postAnswerApp.message = r.message;
                         postAnswerApp.hasError = true;
@@ -172,40 +158,21 @@ let answersApp = new Vue({
                 success: function (r) {
                     if (r.code == OK) {
                         answersApp.answers = r.data;
+                        answersApp.updateDuration();
                     } else {
                         answersApp.message = r.message;
                         answersApp.hasError = true;
                     }
                 }
             })
+        },
+        updateDuration: function () {
+            for (let i = 0; i < this.answers.length; i++) {
+                addDuration(this.answers[i]);
+            }
         }
     },
     created: function () {
         this.loadAnswers();
     }
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

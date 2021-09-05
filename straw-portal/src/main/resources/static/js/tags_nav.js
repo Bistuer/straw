@@ -15,7 +15,7 @@ let tagsApp = new Vue({
                     if (r.code === OK) {
                         console.log('成功获取tags');
                         //将从控制器获得的所有标签赋值给Vue定义的tags数组，由于双向绑定的原因，赋值的同时，页面就开始循环了
-                        tagsApp.tags = r.data;
+                            tagsApp.tags = r.data;
                     }
                 }
             });

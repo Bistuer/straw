@@ -38,3 +38,43 @@ let UNPROCESABLE_ENTITY = 422;
 
 /** 500 INTERNAL SERVER ERROR - [*]：服务器发生错误，用户将无法判断发出的请求是否成功。 */
 let INTERNAL_SERVER_ERROR = 500;
+
+
+function addDuration(item) {
+    //判断参数状态
+    if (item == null || item.createtime == null) {
+        return;
+    }
+    //获得问题中的创建时间属性(毫秒数)
+    let createtime = new Date(item.createtime).getTime();
+    //获得当前时间的毫秒数
+    let now = new Date().getTime();
+    //计算时间差(秒)
+    let durtaion = (now - createtime) / 1000;
+    if (durtaion < 60) {
+        // 显示刚刚
+        //duration这个名字可以随便起,只要保证和页面上取的一样就行
+        item.duration = "刚刚";
+    } else if (durtaion < 60 * 60) {
+        // 显示XX分钟
+        item.duration =
+            (durtaion / 60).toFixed(0) + "分钟前";
+    } else if (durtaion < 60 * 60 * 24) {
+        //显示XX小时
+        item.duration =
+            (durtaion / 60 / 60).toFixed(0) + "小时前";
+    } else {
+        //显示XX天
+        item.duration =
+            (durtaion / 60 / 60 / 24).toFixed(0) + "天前";
+    }
+}
+
+
+
+
+
+
+
+
+
