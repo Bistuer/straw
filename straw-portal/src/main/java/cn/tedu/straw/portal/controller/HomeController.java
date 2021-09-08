@@ -59,10 +59,20 @@ public class HomeController {
 
     /**
      * 显示问题详情页面
+     *
+     * @param user
+     * @return
      */
     @GetMapping("/question/detail.html")
-    public ModelAndView detail() {
-        return new ModelAndView("question/detail");
+    public ModelAndView detail(@AuthenticationPrincipal User user) {
+        if (user.getAuthorities().contains(STUDENT)) {
+            //如果是学生,跳detail.html
+            return new ModelAndView("question/detail");
+        } else if (user.getAuthorities().contains(TEACHER)) {
+            //如果是老师,跳detail_teacher.html
+            return new ModelAndView("question/detail_teacher");
+        }
+        return null;
     }
 
 

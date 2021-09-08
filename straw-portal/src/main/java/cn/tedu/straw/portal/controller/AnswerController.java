@@ -71,4 +71,22 @@ public class AnswerController {
                 .getAnswersByQuestionId(id);
         return R.ok(answers);
     }
+
+    /**
+     * 问题被采纳
+     *
+     * @param id
+     * @return R
+     */
+    @GetMapping("/{id}/solved")
+    public R solved(@PathVariable Integer id) {
+        log.debug("收到参数:{}", id);
+        boolean accepted = answerService.accept(id);
+        if (accepted) {
+            return R.accepted("采纳成功!");
+        } else {
+            return R.notFound("不能重复采纳答案");
+        }
+    }
+
 }

@@ -19,7 +19,7 @@ public class ServiceException extends RuntimeException implements Serializable {
     }
 
     public ServiceException(String message) {
-        super(message); 
+        super(message);
     }
 
     public ServiceException(String message, Throwable cause) {
@@ -89,10 +89,18 @@ public class ServiceException extends RuntimeException implements Serializable {
     }
 
     /**
-         * 422 Unprocesable entity - [POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误。
+     * 422 Unprocesable entity - [POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误。
      */
     public static ServiceException unprocesabelEntity(String message) {
         return new ServiceException(message, R.UNPROCESABLE_ENTITY);
     }
 
+    /**
+     * 返回服务器忙的异常
+     *
+     * @return
+     */
+    public static ServiceException busy() {
+        return new ServiceException("数据库忙", R.INTERNAL_SERVER_ERROR);
+    }
 }

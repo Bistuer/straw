@@ -1,20 +1,100 @@
 package cn.tedu.straw.portal.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import cn.tedu.straw.portal.model.Comment;
+import cn.tedu.straw.portal.service.ICommentService;
+import cn.tedu.straw.portal.vo.CommentVo;
+import cn.tedu.straw.portal.vo.R;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import javax.annotation.Resource;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author tedu.cn
  * @since 2021-04-13
  */
 @RestController
-@RequestMapping("/portal/comment")
+@RequestMapping("/v1/comments")
+@Slf4j
 public class CommentController {
+
+    @Resource
+    ICommentService commentService;
+
+    /**
+     * 开发添加评论的功能 编写控制器代码
+     *
+     * @param commentVo
+     * @param result
+     * @return
+     */
+    @PostMapping
+    public R<Comment> postComment(
+            @Validated CommentVo commentVo,
+            BindingResult result,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        if (result.hasErrors()) {
+            String message = result.getFieldError().getDefaultMessage();
+            return R.unproecsableEntity(message);
+        }
+        log.debug("收到评论信息{}：", commentVo);
+        //这里调用业务逻辑层方法执行评论的新增即可
+        Comment comment = commentService.saveComment(commentVo, userDetails.getUsername());
+        return R.created(comment);
+
+    }
+
+    /**
+     * 删除评论
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}/delete")
+    public R removeComment(
+            @PathVariable Integer id,
+            @AuthenticationPrincipal User user) {
+        log.debug("开始执行删除评论,id为:{}", id);
+        //这里调用业务逻辑层删除的调用
+        boolean isdelete = commentService.removeComment(id, user.getUsername());
+        if (isdelete) {
+            return R.gone("删除成功");
+        } else {
+            return R.notFound("没有找到对应记录");
+        }
+    }
+
+    /**
+     * 重新编译修改/更新评论
+     *
+     * @param id 是commentId
+     * @param commentVo
+     * @param result
+     * @param user
+     * @return
+     */
+    @PostMapping("/{id}/update")
+    public R<Comment> update(
+            @PathVariable Integer id,
+            @Validated CommentVo commentVo, BindingResult result,
+            @AuthenticationPrincipal User user) {
+        if (result.hasErrors()) {
+            String message = result.getFieldError().getDefaultMessage();
+            return R.unproecsableEntity(message);
+        }
+        Comment comment = commentService.updateComment(id, commentVo, user.getUsername());
+        return R.ok(comment);
+
+    }
 
 }

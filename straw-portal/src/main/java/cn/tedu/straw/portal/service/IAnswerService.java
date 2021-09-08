@@ -33,4 +33,11 @@ public interface IAnswerService extends IService<Answer> {
      */
     List<Answer> getAnswersByQuestionId(Integer questionId);
 
+    /**
+     * 采纳答案的方法
+     *
+     * @param answerId
+     * @return boolean
+     */
+    boolean accept(Integer answerId);
 }

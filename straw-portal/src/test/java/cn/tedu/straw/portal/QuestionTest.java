@@ -1,7 +1,9 @@
 package cn.tedu.straw.portal;
 
+import cn.tedu.straw.portal.mapper.AnswerMapper;
 import cn.tedu.straw.portal.mapper.QuestionMapper;
 import cn.tedu.straw.portal.mapper.UserMapper;
+import cn.tedu.straw.portal.model.Answer;
 import cn.tedu.straw.portal.model.Question;
 import cn.tedu.straw.portal.model.Role;
 import cn.tedu.straw.portal.service.IQuestionService;
@@ -23,11 +25,11 @@ public class QuestionTest {
     //@WithMockUser是Spring-Security提供的注解
     //在测试中如果需要从Spring-Security中获得用户信息,那么就可以用这个注解标记
     //指定用户信息,也要注意,这只是个测试,Spring-Security不会对信息验证
-    @WithMockUser(username = "st2",password = "123456")
-    public void getQuest(){
-        PageInfo<Question> pi=
-                questionService.getMyQuestions(1,8);
-        for(Question q:pi.getList()){
+    @WithMockUser(username = "st2", password = "123456")
+    public void getQuest() {
+        PageInfo<Question> pi =
+                questionService.getMyQuestions(1, 8);
+        for (Question q : pi.getList()) {
             System.out.println(q);
         }
     }
@@ -36,15 +38,15 @@ public class QuestionTest {
     UserMapper userMapper;
 
     @Test
-    public void testUser(){
+    public void testUser() {
         UserVo userVo = userMapper.findUserVoByUsername("st2");
         System.out.println(userVo);
     }
 
     @Test
-    public void roles(){
+    public void roles() {
         List<Role> list = userMapper.findUserRolesById(1);
-        for (Role role:list) {
+        for (Role role : list) {
             System.out.println(role);
         }
     }
@@ -53,12 +55,22 @@ public class QuestionTest {
     QuestionMapper questionMapper;
 
     @Test
-    public void teacherQuestions(){
-        List<Question> list=
+    public void teacherQuestions() {
+        List<Question> list =
                 questionMapper.findTeachersQuestions(3);
-        for(Question question:list){
+        for (Question question : list) {
             System.out.println(question);
         }
     }
 
+    @Autowired
+    AnswerMapper answerMapper;
+
+    @Test
+    public void testAnswer() {
+        List<Answer> answers = answerMapper.findAnswersByQuestionId(114);
+        for (Answer answer : answers) {
+            System.out.println(answer);
+        }
+    }
 }
