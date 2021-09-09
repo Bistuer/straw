@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="straw-resource" />
+        <module name="straw-gateway" />
         <module name="straw-portal" />
         <module name="straw-eureka" />
         <module name="straw-generator" />
@@ -16,6 +17,7 @@
     <bytecodeTargetLevel>
       <module name="straw" target="1.8" />
       <module name="straw-eureka" target="1.8" />
+      <module name="straw-gateway" target="1.8" />
       <module name="straw-generator" target="1.8" />
       <module name="straw-portal" target="1.8" />
       <module name="straw-resource" target="1.8" />
@@ -25,6 +27,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="straw" options="-parameters" />
       <module name="straw-eureka" options="-parameters" />
+      <module name="straw-gateway" options="-parameters" />
       <module name="straw-generator" options="-parameters" />
       <module name="straw-portal" options="-parameters" />
       <module name="straw-resource" options="-parameters" />
