@@ -30,7 +30,7 @@ let app = new Vue({
             }
 
             $.ajax({
-                url: "/register",
+                url: "/sys/v1/users/register",
                 method: "POST",
                 //这个data是上面 let data的data
                 data: data,

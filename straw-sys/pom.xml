@@ -21,10 +21,10 @@
                 spring-cloud-starter-netflix-eureka-client
             </artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>cn.tedu</groupId>-->
-<!--            <artifactId>straw-commons</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>cn.tedu</groupId>
+            <artifactId>straw-commons</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
