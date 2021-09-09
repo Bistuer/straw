@@ -12,34 +12,39 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * Ribbon Demo
+ *
+ * @author fanzhen
+ * @date 2021/9/9
+ */
 @RestController
 @RequestMapping("/v1/auth")
 @Slf4j
 public class AuthController {
+
     @GetMapping("/demo")
-    public String demo(){
+    public String demo() {
         return "Hello Ribbon!";
     }
-
 
     @Resource
     IUserService userService;
 
     @GetMapping("/user")
-    public User getUser(String username){
+    public User getUser(String username) {
         return userService.getUserByUsername(username);
     }
 
     @GetMapping("/permissions")
-    public List<Permission> getPermissions(Integer userId){
+    public List<Permission> getPermissions(Integer userId) {
         return userService.getUserPermissions(userId);
     }
 
     @GetMapping("/roles")
-    public List<Role> getRoles(Integer userId){
+    public List<Role> getRoles(Integer userId) {
         return userService.getUserRoles(userId);
     }
-
 
 }
 
