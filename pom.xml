@@ -33,7 +33,9 @@
         <module>straw-portal</module>
         <module>straw-generator</module>
         <module>straw-resource</module>
+        <module>straw-sys</module>
         <module>straw-commons</module>
+        <module>straw-faq</module>
         <!--<module>straw-kafka</module>
         <module>straw-search</module>-->
         <module>straw-eureka</module>
@@ -73,6 +75,11 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus</artifactId>
                 <version>${mybatis.plus.version}</version>
             </dependency>
             <dependency>

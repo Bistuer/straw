@@ -47,6 +47,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    /**
+     * 学生注册
+     *
+     * @param registerVo
+     */
     @Override
     @Transactional
     public void registerStudent(RegisterVo registerVo) {
@@ -78,8 +83,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setPhone(registerVo.getPhone());
         user.setNickname(registerVo.getNickname());
         //用户输入的是明文密码,数据库保存的是带算法ID的加密结果!
-        user.setPassword("{bcrypt}" +
-                passwordEncoder.encode(registerVo.getPassword()));
+        user.setPassword("{bcrypt}" + passwordEncoder.encode(registerVo.getPassword()));
         user.setClassroomId(classroom.getId());
         user.setCreatetime(LocalDateTime.now());
         user.setEnabled(1);
