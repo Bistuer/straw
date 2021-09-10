@@ -8,7 +8,7 @@ let tagsApp = new Vue({
         loadTags: function () {
             console.log('执行了 loadTags');
             $.ajax({
-                url: '/v1/tags',
+                url: '/faq/v1/tags',
                 method: 'GET',
                 success: function (r) {
                     console.log(r);
