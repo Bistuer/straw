@@ -118,5 +118,14 @@ public class QuestionController {
 
     }
 
+    //按用户id返回该用户问题数
+    @GetMapping("/count")
+    public Integer count(Integer userId){
+        return questionService.countQuestionsByUserId(userId);
+    }
+
+
+
+
 
 }

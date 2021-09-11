@@ -29,5 +29,6 @@ class StrawFaqApplicationTests {
         System.out.println(userQuestionMapper);
 
 
+
     }
 }

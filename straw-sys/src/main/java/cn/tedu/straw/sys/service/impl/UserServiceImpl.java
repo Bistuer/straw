@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -153,16 +154,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return masterMap;
     }
 
-    //    @Autowired
-//    IQuestionService questionService;
+    @Autowired
+    RestTemplate restTemplate;
+
     @Override
     public UserVo currentUserVo(String username) {
-
         UserVo user = userMapper.findUserVoByUsername(username);
-        //现在暂时无法查询用户的提问数和收藏数
-
+        String url = "http://faq-service/v1/questions/count?userId={1}";
+        Integer count = restTemplate.getForObject(
+                url, Integer.class, user.getId());
+        user.setQuestions(count);
+        //问题收藏数暂时不做
         return user;
     }
+
 
     @Override
     public User getUserByUsername(String username) {

@@ -110,8 +110,7 @@ public class SystemController {
             3.保留文件的扩展名,还能方便文件识别
          */
         //按照当前日期创建文件夹
-        String path = DateTimeFormatter.ofPattern("yyyy/MM/dd")
-                .format(LocalDate.now());
+        String path = DateTimeFormatter.ofPattern("yyyy/MM/dd").format(LocalDate.now());
         //path="2020/12/16"
         File folder = new File(resourcePath, path);
         //folder->F:/resource/2020/12/16

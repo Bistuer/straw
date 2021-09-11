@@ -12,22 +12,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-
-/**
- * 通过Ribbon调用其他服务器资源
- *
- * @author fanzhen
- * @Date 2021/9/9
- */
 @Component
 @Slf4j
-public class UserDetailServiceImpl implements UserDetailsService {
-
+public class UserDetailServiceImpl
+        implements UserDetailsService {
     @Autowired
     RestTemplate restTemplate;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username)
+            throws UsernameNotFoundException {
         String url = "http://sys-service/v1/auth/user?username={1}";
         User user = restTemplate.getForObject(
                 url, User.class, username);
