@@ -14,7 +14,7 @@ let createQuestionApp = new Vue({
     methods: {
         loadTags: function () {
             $.ajax({
-                url: "/v1/tags",
+                url: "/faq/v1/tags",
                 method: "get",
                 success: function (r) {
                     console.log(r);
@@ -35,7 +35,7 @@ let createQuestionApp = new Vue({
         },
         loadTeachers: function () {
             $.ajax({
-                url: "/v1/users/master",
+                url: "/sys/v1/users/master",
                 method: "get",
                 success: function (r) {
                     console.log(r);
@@ -65,7 +65,7 @@ let createQuestionApp = new Vue({
             }
             console.log(data);
             $.ajax({
-                url: "/v1/questions",
+                url: "/faq  /v1/questions",
                 traditional: true,//使用传统数组的编码方式,SpringMvc才能接收
                 method: "post",
                 data: data,

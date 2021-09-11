@@ -161,8 +161,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public UserVo currentUserVo(String username) {
         UserVo user = userMapper.findUserVoByUsername(username);
         String url = "http://faq-service/v1/questions/count?userId={1}";
-        Integer count = restTemplate.getForObject(
-                url, Integer.class, user.getId());
+        Integer count = restTemplate.getForObject(url, Integer.class, user.getId());
         user.setQuestions(count);
         //问题收藏数暂时不做
         return user;

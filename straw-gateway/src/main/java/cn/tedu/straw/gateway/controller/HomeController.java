@@ -31,6 +31,16 @@ public class HomeController {
     }
 
     /**
+     * 学生提问的方法
+     *
+     * @return ModelAndView
+     */
+    @GetMapping("/question/create.html")
+    public ModelAndView create() {
+        return new ModelAndView("question/create");
+    }
+
+    /**
      * 显示首页
      *
      * @param user

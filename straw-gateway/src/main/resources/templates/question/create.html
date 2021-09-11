@@ -489,7 +489,7 @@
             let form = new FormData();
             form.append("imageFile",file);
             $.ajax({
-                url: "/upload/file",
+                url: "/resource/v1/images",
                 method: "post",
                 data: form,//发送的是我们构建的表单中的数据
                 //下面有两个特殊参数,需要在文件上传时设置

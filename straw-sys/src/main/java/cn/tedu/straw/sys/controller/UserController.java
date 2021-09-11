@@ -54,4 +54,14 @@ public class UserController {
         return userService.getMasters();
     }
 
+    /**
+     * 查询所有老师
+     *
+     * @return
+     */
+    @GetMapping("/masters")
+    public R<List<cn.tedu.straw.commons.model.User>> masters() {
+        List<cn.tedu.straw.commons.model.User> list = userService.getMasters();
+        return R.ok(list);
+    }
 }
