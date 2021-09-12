@@ -19,19 +19,16 @@ public class Item {
     @Id
     private Long id;
 
-    @Field(type = FieldType.Text, analyzer = "ik_smart", searchAnalyzer = "ik_smart")
+    @Field(type = FieldType.Text,analyzer = "ik_smart"
+            ,searchAnalyzer = "ik_smart")
     private String title;
-
-    @Field(type = FieldType.Keyword)
+    @Field(type=FieldType.Keyword)
     private String category;
-
-    @Field(type = FieldType.Keyword)
+    @Field(type=FieldType.Keyword)
     private String brand;
-
-    @Field(type = FieldType.Double)
+    @Field(type=FieldType.Double)
     private Double price;
-
-    @Field(type = FieldType.Keyword, index = false)
+    @Field(type=FieldType.Keyword,index=false)
     private String images;
 
 }

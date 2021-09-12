@@ -241,4 +241,19 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         question.setTags(tags);
         return question;
     }
+
+    /**
+     * 为ES分页查询所有问题的方法
+     *
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public PageInfo<Question> getQuestion(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        // null 表示全查
+        List<Question> list = questionMapper.selectList(null);
+        return new PageInfo<Question>(list);
+    }
 }

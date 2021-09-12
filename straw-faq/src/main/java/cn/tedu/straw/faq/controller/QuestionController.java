@@ -16,6 +16,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  * 前端控制器
@@ -118,14 +120,43 @@ public class QuestionController {
 
     }
 
-    /**
-     * 按用户id返回该用户问题数
-     * @param userId
-     * @return Integer
-     */
+    //按用户id返回该用户问题数
     @GetMapping("/count")
-    public Integer count(Integer userId){
+    public Integer count(Integer userId) {
         return questionService.countQuestionsByUserId(userId);
     }
+
+    //search模块调用这个方法获得所有问题
+    @GetMapping("/page")
+    public List<Question> questions(Integer pageNum, Integer pageSize) {
+        PageInfo<Question> pageInfo = questionService.getQuestion(pageNum, pageSize);
+        return pageInfo.getList();
+    }
+
+    //这个方法也是用于search调用的
+    //目的是返回按照指定每页的条数能查出多少页
+    @GetMapping("/page/count")
+    public Integer pageCount(Integer pageSize) {
+        //count()方式是MybatisPlus自带的方法
+        Integer totalCount = questionService.count();
+        return totalCount % pageSize == 0 ? totalCount / pageSize
+                : totalCount / pageSize + 1;
+        //或
+        //return (totalCount+pageSize-1)/pageSize;
+    }
+
+    /*
+        68 /10   6     7
+        70 /10   7     7
+        68 %10 =8!=0  +1
+        70 %10 =0==0  +0
+        总行数%每页条数,如果==0就直接使用除法的结果
+                      如果!=0就需要对当前的结果+1
+
+        (68+9)/10
+        77/10   =7
+        79/10   =7
+        80/10   =8
+     */
 
 }

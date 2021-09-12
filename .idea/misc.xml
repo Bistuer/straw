@@ -13,6 +13,7 @@
         <option value="$PROJECT_DIR$/straw-commons/pom.xml" />
         <option value="$PROJECT_DIR$/straw-faq/pom.xml" />
         <option value="$PROJECT_DIR$/straw-search/pom.xml" />
+        <option value="$PROJECT_DIR$/straw-kafka/pom.xml" />
       </list>
     </option>
   </component>

@@ -8,12 +8,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="straw-generator" />
-        <module name="straw-commons" />
+        <module name="straw-sys" />
         <module name="straw-gateway" />
         <module name="straw-portal" />
         <module name="straw-search" />
         <module name="straw-faq" />
-        <module name="straw-sys" />
+        <module name="straw-kafka" />
+        <module name="straw-commons" />
         <module name="straw-eureka" />
         <module name="straw-resource" />
       </profile>
@@ -25,6 +26,7 @@
       <module name="straw-faq" target="1.8" />
       <module name="straw-gateway" target="1.8" />
       <module name="straw-generator" target="1.8" />
+      <module name="straw-kafka" target="1.8" />
       <module name="straw-portal" target="1.8" />
       <module name="straw-resource" target="1.8" />
       <module name="straw-search" target="1.8" />
@@ -39,6 +41,7 @@
       <module name="straw-faq" options="-parameters" />
       <module name="straw-gateway" options="-parameters" />
       <module name="straw-generator" options="-parameters" />
+      <module name="straw-kafka" options="-parameters" />
       <module name="straw-portal" options="-parameters" />
       <module name="straw-resource" options="-parameters" />
       <module name="straw-search" options="-parameters" />

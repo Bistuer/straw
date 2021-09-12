@@ -34,7 +34,7 @@
         <module>straw-sys</module>
         <module>straw-commons</module>
         <module>straw-faq</module>
-        <!--<module>straw-kafka</module>-->
+        <module>straw-kafka</module>
         <module>straw-search</module>
         <module>straw-eureka</module>
     </modules>
