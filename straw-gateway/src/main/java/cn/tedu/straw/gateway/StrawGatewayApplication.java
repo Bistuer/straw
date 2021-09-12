@@ -17,13 +17,9 @@ public class StrawGatewayApplication {
         SpringApplication.run(StrawGatewayApplication.class, args);
     }
 
-    /**
-     * LoadBalanced 负载均衡
-     * @return
-     */
     @Bean
     @LoadBalanced
-    public RestTemplate restTemplate() {
+    public RestTemplate restTemplate(){
         return new RestTemplate();
     }
 

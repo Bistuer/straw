@@ -10,7 +10,6 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 public class AnswerVo implements Serializable {
-
     @NotNull(message = "问题编号不能为空")
     private Integer questionId;
 

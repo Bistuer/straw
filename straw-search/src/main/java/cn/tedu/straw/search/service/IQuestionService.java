@@ -11,7 +11,8 @@ public interface IQuestionService {
     void  sync();
 
     //从Es中按搜索条件查询的方法
-    PageInfo<QuestionVo> search(String key,String username, Integer pageNum,Integer pageSize);
+    PageInfo<QuestionVo> search(String key,String username,
+                                Integer pageNum,Integer pageSize);
 
     //新增QuestionVo对象到ES的方法
     void saveQuestion(QuestionVo questionVo);

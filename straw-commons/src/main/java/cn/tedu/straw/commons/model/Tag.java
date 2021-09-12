@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author tedu.cn
- * @since 2021-04-13
+ * @since 2020-12-09
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -38,5 +38,6 @@ public class Tag implements Serializable {
 
     @TableField("createtime")
     private LocalDateTime createtime;
+
 
 }

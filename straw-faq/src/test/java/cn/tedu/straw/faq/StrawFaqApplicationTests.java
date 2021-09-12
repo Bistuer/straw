@@ -6,13 +6,11 @@ import cn.tedu.straw.faq.mapper.QuestionTagMapper;
 import cn.tedu.straw.faq.mapper.TagMapper;
 import cn.tedu.straw.faq.mapper.UserQuestionMapper;
 import cn.tedu.straw.faq.service.IQuestionService;
-import cn.tedu.straw.faq.service.impl.QuestionServiceImpl;
 import com.github.pagehelper.PageInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @SpringBootTest
 class StrawFaqApplicationTests {

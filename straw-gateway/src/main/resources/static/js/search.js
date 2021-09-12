@@ -46,16 +46,16 @@ let questionsApp = new Vue({
             let questions = this.questions;
             for(let i=0; i<questions.length; i++){
                 //获得当前问题对象的所有标签的集合(数组)
-               let tags = questions[i].tags;
-               //js代码中特有的写法if(tags)
-               //相当于判断tags非空
-               if(tags){
-                   //获取当前问题的第一个标签对应的图片文件路径
-                   let tagImage = 'img/tags/'+tags[0].id+'.jpg';
-                   console.log(tagImage);
-                   //将这个文件路径保存到tagImage属性用,以便页面调用
-                   questions[i].tagImage = tagImage;
-               }
+                let tags = questions[i].tags;
+                //js代码中特有的写法if(tags)
+                //相当于判断tags非空
+                if(tags){
+                    //获取当前问题的第一个标签对应的图片文件路径
+                    let tagImage = 'img/tags/'+tags[0].id+'.jpg';
+                    console.log(tagImage);
+                    //将这个文件路径保存到tagImage属性用,以便页面调用
+                    questions[i].tagImage = tagImage;
+                }
             }
         },
         updateDuration:function () {

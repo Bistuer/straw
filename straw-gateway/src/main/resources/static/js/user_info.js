@@ -10,9 +10,9 @@ let userApp = new Vue({
                 method: "get",
                 success: function (r) {
                     console.log(r)
-                    if (r.code == OK) {
-                        userApp.user = r.data;
-                    } else {
+                    if (r.code==OK) {
+                        userApp.user=r.data;
+                    }else{
                         console.log(r.message);
                     }
                 }

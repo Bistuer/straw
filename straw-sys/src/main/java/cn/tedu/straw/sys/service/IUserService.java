@@ -13,69 +13,40 @@ import java.util.Map;
 
 /**
  * <p>
- * 服务类
- * <p>
- * 实现类是UserServiceImpl
+ *  服务类
  * </p>
  *
  * @author tedu.cn
- * @since 2021-04-13
+ * @since 2020-12-09
  */
 public interface IUserService extends IService<User> {
 
-    /**
-     * 用户注册的方法(现在是针对学生注册)
-     *
-     * @param registerVo
-     */
+    //用户注册的方法(现在是针对学生注册)
     void registerStudent(RegisterVo registerVo);
 
-    /**
-     * 查询所有老师用户的方法
-     *
-     * @return
-     */
+    //查询所有老师用户的方法
     List<User> getMasters();
+    //查询所有老师用户的Map方法
+    Map<String,User> getMasterMap();
 
-    /**
-     * 查询所有老师用户的Map方法
-     *
-     * @return
-     */
-    Map<String, User> getMasterMap();
-
-    /**
-     * 查询当前登录用户信息面板的方法
-     * 这个方法的参数有变化!!!!注意!!!!
-     *
-     * @param username
-     * @return
-     */
+    //查询当前登录用户信息面板的方法
+    //这个方法的参数有变化!!!!注意!!!!
     UserVo currentUserVo(String username);
 
-    /**
-     * 根据用户名获得用户信息
-     * 这个方法的参数有变化
-     *
-     * @param username
-     * @return
-     */
+    //根据用户名获得用户信息
     User getUserByUsername(String username);
 
-    /**
-     * 根据用户id获得用户权限
-     *
-     * @param userId
-     * @return
-     */
+    //根据用户id获得用户权限
     List<Permission> getUserPermissions(Integer userId);
 
-    /**
-     * 根据用户id获得角色
-     *
-     * @param userId
-     * @return
-     */
+    //根据用户id获得角色
     List<Role> getUserRoles(Integer userId);
+
+
+
+
+
+
+
 
 }

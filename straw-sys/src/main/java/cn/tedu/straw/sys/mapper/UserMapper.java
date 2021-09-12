@@ -21,12 +21,7 @@ import java.util.List;
 @Repository
 public interface UserMapper extends BaseMapper<User> {
 
-    /**
-     * 根据用户输入的用户名查询用户信息的方法
-     *
-     * @param username
-     * @return
-     */
+    //根据用户输入的用户名查询用户信息的方法
     @Select("select * from user where username=#{username}")
     User findUserByUsername(String username);
 
@@ -35,12 +30,7 @@ public interface UserMapper extends BaseMapper<User> {
     UserVo findUserVoByUsername(String username);
 
 
-    /**
-     * 查询指定id的用户的所有权限
-     *
-     * @param id
-     * @return
-     */
+    //查询指定id的用户的所有权限
     @Select("SELECT p.id,p.name" +
             " FROM user u" +
             " LEFT JOIN user_role ur ON u.id=ur.user_id" +
@@ -50,18 +40,16 @@ public interface UserMapper extends BaseMapper<User> {
             " WHERE u.id=#{id}")
     List<Permission> findUserPermissionsById(Integer id);
 
-    /**
-     * 按用户id查询用户的所有角色
-     *
-     * @param id
-     * @return
-     */
+    //按用户id查询用户的所有角色
     @Select("select r.id,r.name " +
             "from user u " +
             "left join user_role ur on u.id=ur.user_id " +
             "left join role r on r.id=ur.role_id " +
             "where u.id=#{userId}")
     List<Role> findUserRolesById(Integer id);
+
+
+
 
 
 }

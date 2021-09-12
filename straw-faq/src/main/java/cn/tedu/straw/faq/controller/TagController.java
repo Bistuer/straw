@@ -27,5 +27,10 @@ public class TagController {
         return R.ok(list);
     }
 
+    //为其它微服务提供的查询所有标签的功能方法
+    @GetMapping("/list")
+    public List<Tag> list(){
+        return tagService.getTags();
+    }
 
 }

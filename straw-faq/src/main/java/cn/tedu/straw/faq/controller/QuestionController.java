@@ -122,25 +122,26 @@ public class QuestionController {
 
     //按用户id返回该用户问题数
     @GetMapping("/count")
-    public Integer count(Integer userId) {
+    public Integer count(Integer userId){
         return questionService.countQuestionsByUserId(userId);
     }
 
     //search模块调用这个方法获得所有问题
     @GetMapping("/page")
-    public List<Question> questions(Integer pageNum, Integer pageSize) {
-        PageInfo<Question> pageInfo = questionService.getQuestion(pageNum, pageSize);
+    public List<Question> questions(
+            Integer pageNum,Integer pageSize){
+        PageInfo<Question> pageInfo=
+                questionService.getQuestion(pageNum,pageSize);
         return pageInfo.getList();
     }
-
     //这个方法也是用于search调用的
     //目的是返回按照指定每页的条数能查出多少页
     @GetMapping("/page/count")
-    public Integer pageCount(Integer pageSize) {
+    public Integer pageCount(Integer pageSize){
         //count()方式是MybatisPlus自带的方法
-        Integer totalCount = questionService.count();
-        return totalCount % pageSize == 0 ? totalCount / pageSize
-                : totalCount / pageSize + 1;
+        Integer totalCount=questionService.count();
+        return totalCount%pageSize==0?totalCount/pageSize
+                :totalCount/pageSize+1;
         //或
         //return (totalCount+pageSize-1)/pageSize;
     }
@@ -157,6 +158,14 @@ public class QuestionController {
         77/10   =7
         79/10   =7
         80/10   =8
+
+
      */
+
+
+
+
+
+
 
 }

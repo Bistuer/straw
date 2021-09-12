@@ -6,23 +6,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-/**
- * RestControllerAdvice 一个方便的注释，它本身用@ControllerAdvice和@ResponseBody注释。
- *
- * @author fanzhen
- */
 @RestControllerAdvice
 @Slf4j
 public class ExceptionControllerAdvice {
 
-    /**
-     * @param e
-     * @return
-     * @ExceptionHandler表示这个方法时用来出处理异常的
-     */
+    //@ExceptionHandler表示这个方法时用来出处理异常的
     @ExceptionHandler
-    public R handlerServiceException(ServiceException e) {
-        log.error("业务异常", e);
+    public R handlerServiceException(ServiceException e){
+        log.error("业务异常",e);
         return R.failed(e);
     }
 

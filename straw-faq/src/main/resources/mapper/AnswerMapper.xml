@@ -13,15 +13,15 @@
         <result column="createtime" property="createtime"/>
         <result column="accept_status" property="acceptStatus"/>
         <collection property="comments" ofType="cn.tedu.straw.commons.model.Comment">
-            <id column="comment_id" property="id"/>
-            <result column="comment_user_id" property="userId"/>
-            <result column="comment_answer_id" property="answerId"/>
-            <result column="comment_user_nick_name" property="userNickName"/>
-            <result column="comment_content" property="content"/>
-            <result column="comment_createtime" property="createtime"/>
+            <id column="comment_id" property="id" />
+            <result column="comment_user_id" property="userId" />
+            <result column="comment_answer_id" property="answerId" />
+            <result column="comment_user_nick_name" property="userNickName" />
+            <result column="comment_content" property="content" />
+            <result column="comment_createtime" property="createtime" />
         </collection>
     </resultMap>
-    <select id="findAnswersByQuestionId" resultMap="answerCommentMap">
+    <select id="findAnswersByQuestionId" resultMap="answerCommentMap" >
         SELECT
             a.id,
             a.content,

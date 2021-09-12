@@ -15,11 +15,11 @@ import java.util.List;
 
 /**
  * <p>
- *
+ * 
  * </p>
  *
  * @author tedu.cn
- * @since 2021-04-13
+ * @since 2020-12-09
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -30,12 +30,10 @@ public class Question implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //定义问题状态的常量
-    //已添加/未回复
-    public static final Integer POSTED = 0;
-    //正在采纳/已回复
-    public static final Integer SOLVING = 1;
-    //已经采纳/已解决
-    public static final Integer SOLVED = 2;
+    public static final Integer POSTED=0; //已添加/未回复
+    public static final Integer SOLVING=1;//正在采纳/已回复
+    public static final Integer SOLVED=2; //已经采纳/已解决
+
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
@@ -97,11 +95,11 @@ public class Question implements Serializable {
     @TableField("tag_names")
     private String tagNames;
 
-    /**
-     * 为问题实体类添加标签集合
-     *
-     * @TableField(exist = false) 表示数据库中不存在这个列不需要去找，防止报错
-     */
+    //为问题实体类添加标签集合
+    //@TableField(exist = false)表示数据库中没有这样的列,防止报错
     @TableField(exist = false)
     private List<Tag> tags;
+
+
+
 }

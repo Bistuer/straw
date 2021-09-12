@@ -59,11 +59,14 @@ public class QuestionServiceImpl implements IQuestionService {
         return user;
     }
     @Override
-    public PageInfo<QuestionVo> search(String key, String username, Integer pageNum, Integer pageSize) {
-        if(pageNum==null)
+    public PageInfo<QuestionVo> search(String key,
+                                       String username, Integer pageNum, Integer pageSize) {
+        if(pageNum==null) {
             pageNum=1;
-        if(pageSize==null)
+        }
+        if(pageSize==null) {
             pageSize=8;
+        }
         User user=getUser(username);
         //Pageable可以内置排序规则
         Pageable pageable= PageRequest.of(pageNum-1,
