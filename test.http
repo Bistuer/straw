@@ -1,0 +1,64 @@
+POST http://localhost:9200/_analyze
+Content-Type: application/json
+
+{
+  "analyzer": "ik_max_word",
+  "text": "好好学习天天向上"
+}
+
+###
+GET http://localhost:9200
+
+###
+POST http://localhost:9200/_analyze
+Content-Type: application/json
+
+{
+  "analyzer": "ik_smart",
+  "text": "好好学习天天向上"
+}
+
+###
+### questions 中添加文档
+POST http://localhost:9200/questions/_create/1
+Content-Type: application/json
+{
+  "id":1,
+  "title":"Java基本数据类型有哪些",
+  "content":"面时候为啥要问基本类型这么简单问题呀，我们要如何回答呢？"
+}
+
+### 创建 index
+PUT http://localhost:9200/questions
+
+### 删除一个Index
+DELETE http://localhost:9200/questions
+
+### 设置index中的文档属性采用ik分词
+POST http://localhost:9200/questions/_mapping
+Content-Type: application/json
+
+{
+  "properties": {
+    "title": {
+      "type": "text",
+      "analyzer": "ik_max_word",
+      "search_analyzer": "ik_max_word"
+    },
+    "content": {
+      "type": "text",
+      "analyzer": "ik_max_word",
+      "search_analyzer": "ik_max_word"
+    }
+  }
+}
+
+### questions 中添加文档
+POST http://localhost:9200/questions/_create/1
+Content-Type: application/json
+​
+{
+  "id":1,
+  "title":"Java基本数据类型有哪些",
+  "content":"面时候为啥要问基本类型这么简单问题呀，我们要如何回答呢？"
+}

@@ -180,8 +180,7 @@
     </div>
   </div><!-- 查看邀请码modal-->
 </header>
-<!--引入标签的导航栏 index中 下面所示  index::tags_nav index表示index.html-->
-<!--<div class="container-fluid"  th:fragment="tags_nav" >-->
+<!--引入标签的导航栏-->
 <div class="container-fluid" th:replace="index::tags_nav" >
   <div class="nav font-weight-light">
     <a href="../tag/tag_question.html" class="nav-item nav-link text-info"><small>全部</small></a>
@@ -481,37 +480,37 @@
       placeholder: '请输入问题的详细描述...',
       callbacks:{
         //在执行指定操作后自动调用下面的方法
-        //onImageUpload方法就会在用户选中图片之后立即执行
+        //onImageUpload方法就会在用户选中图片之后立即运行
         onImageUpload:function(files) {
-            //参数是一个file数组取出第一个,因为我们只会选中一个
-            let file = files[0];
-            //构建表单
-            let form = new FormData();
-            form.append("imageFile",file);
-            $.ajax({
-                url: "/resource/v1/images",
-                method: "post",
-                data: form,//发送的是我们构建的表单中的数据
-                //下面有两个特殊参数,需要在文件上传时设置
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function (r) {
-                    if (r.code == OK) {
-                        console.log(r);
-                        //将刚刚上传成功的图片显示在summernote富文本编辑器中
-                        var img = new Image(); //实例化了一个img标签
-                        img.src = r.message;   //将img标签的src属性赋值为刚上传的图片
-                        //summernote方法中提供了插入标签的功能
-                        //支持使用"insertNode"表示要向富文本编辑器中添加标签内容
-                        $("#summernote").summernote(
-                            "insertNode", img
-                        )
-                    } else {
-                        alert(r.message);
-                    }
-                }
-            });
+          //参数是一个file数组取出第一个,因为我们只会选中一个
+          let file =files[0];
+          //构建表单
+          let form=new FormData();
+          form.append("imageFile",file);
+          $.ajax({
+            url:"/resource/v1/images",
+            method:"post",
+            data:form,//发送的是我们构建的表单中的数据
+            //下面有两个特殊参数,需要在文件上传时设置
+            cache:false,
+            contentType:false,
+            processData:false,
+            success:function(r){
+              if(r.code==OK){
+                console.log(r);
+                //将刚刚上传成功的图片显示在summernote富文本编辑器中
+                var img=new Image();//实例化了一个img标签
+                img.src=r.message;//将img标签的src属性赋值为刚上传的图片
+                //summernote方法中提供了插入标签的功能
+                //支持使用"insertNode"表示要向富文本编辑器中添加标签内容
+                $("#summernote").summernote(
+                        "insertNode",img
+                )
+              }else{
+                alert(r.message);
+              }
+            }
+          });
         }
       }
     });
