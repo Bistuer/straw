@@ -14,16 +14,16 @@ import javax.annotation.Resource;
 public class KafkaProducer {
 
     @Resource
-    private KafkaTemplate<String,String> kafkaTemplate;
+    private KafkaTemplate<String, String> kafkaTemplate;
 
-    private Gson gson=new Gson();
+    private Gson gson = new Gson();
 
-    public void sendQuestion(Question question){
-        log.debug("准备发送问题:{}"+question);
+    public void sendQuestion(Question question) {
+        log.debug("准备发送问题:{}" + question);
         //将问题转换为json格式
-        String json=gson.toJson(question);
-        log.debug("开始发送{}"+json);
-        kafkaTemplate.send(Topic.QUESTIONS,json);
+        String json = gson.toJson(question);
+        log.debug("开始发送{}" + json);
+        kafkaTemplate.send(Topic.QUESTIONS, json);
         log.debug("发送完成!");
     }
 }

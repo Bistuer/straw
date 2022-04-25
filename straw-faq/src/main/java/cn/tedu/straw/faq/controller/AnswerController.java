@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author tedu.cn
@@ -38,16 +38,15 @@ public class AnswerController {
     public R postAnswer(
             @Validated AnswerVo answerVo,
             BindingResult result,
-            @AuthenticationPrincipal User user){
-        log.debug("收到回复信息{}",answerVo);
-        if(result.hasErrors()){
-            String message=result.getFieldError().getDefaultMessage();
+            @AuthenticationPrincipal User user) {
+        log.debug("收到回复信息{}", answerVo);
+        if (result.hasErrors()) {
+            String message = result.getFieldError().getDefaultMessage();
             log.warn(message);
-            return  R.unproecsableEntity(message);
+            return R.unproecsableEntity(message);
         }
         //这里调用业务逻辑层方法
-        Answer answer=
-            answerService.saveAnswer(answerVo,user.getUsername());
+        Answer answer = answerService.saveAnswer(answerVo, user.getUsername());
         return R.created(answer);
     }
 
@@ -55,23 +54,23 @@ public class AnswerController {
     // 例如:/v1/answers/question/12
     @GetMapping("/question/{id}")
     public R<List<Answer>> questionAnswers(
-            @PathVariable Integer id){
-        if(id==null){
+            @PathVariable Integer id) {
+        if (id == null) {
             return R.invalidRequest("问题ID不能为空!");
         }
-        List<Answer> answers=answerService
+        List<Answer> answers = answerService
                 .getAnswersByQuestionId(id);
         return R.ok(answers);
     }
 
     @GetMapping("/{id}/solved")
     public R solved(
-            @PathVariable Integer id){
-        log.debug("收到参数:{}",id);
-        boolean accepted=answerService.accept(id);
-        if(accepted) {
+            @PathVariable Integer id) {
+        log.debug("收到参数:{}", id);
+        boolean accepted = answerService.accept(id);
+        if (accepted) {
             return R.accepted("采纳成功!");
-        }else{
+        } else {
             return R.notFound("不能重复采纳答案");
         }
     }

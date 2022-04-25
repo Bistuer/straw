@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author tedu.cn
@@ -78,6 +78,6 @@ public class Answer implements Serializable {
      * 当前回答的所有评论
      */
     @TableField(exist = false)
-    private List<Comment> comments=new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
 }

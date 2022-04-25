@@ -12,7 +12,8 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 权限  id      name           desc
+ *       1     /index.html   访问主页
  * </p>
  *
  * @author tedu.cn

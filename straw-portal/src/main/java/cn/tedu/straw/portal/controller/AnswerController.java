@@ -36,6 +36,7 @@ public class AnswerController {
     /**
      * 新增回复的控制方法
      *
+     * BindingResult用在实体类校验信息返回结果绑定。
      * @param answerVo
      * @param result
      * @param user

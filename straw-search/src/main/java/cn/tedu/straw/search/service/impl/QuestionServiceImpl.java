@@ -36,63 +36,62 @@ public class QuestionServiceImpl implements IQuestionService {
     @Override
     public void sync() {
         //先确定循环次数(确定数据一共有多少页)
-        String url=
+        String url =
                 "http://faq-service/v1/questions/page/count?pageSize={1}";
-        Integer page=restTemplate.getForObject(
-                url,Integer.class,10);
-        for(int i=1;i<=page;i++){
+        Integer page = restTemplate.getForObject(
+                url, Integer.class, 10);
+        for (int i = 1; i <= page; i++) {
             //循环调用分页查询Question的方法
-            url= "http://faq-service/v1/questions/page?" +
+            url = "http://faq-service/v1/questions/page?" +
                     "pageNum={1}&pageSize={2}";
-            QuestionVo[] questions=restTemplate.getForObject(
-                    url,QuestionVo[].class,i,10);
+            QuestionVo[] questions = restTemplate.getForObject(
+                    url, QuestionVo[].class, i, 10);
             //增加到ES中
             questionRepository.saveAll(Arrays.asList(questions));
-            log.debug("第{}页新增完毕",i);
+            log.debug("第{}页新增完毕", i);
         }
     }
 
-    public User getUser(String username){
-        String url="http://sys-service/v1/auth/user?username={1}";
-        User user=restTemplate.getForObject(
-                url,User.class,username);
+    public User getUser(String username) {
+        String url = "http://sys-service/v1/auth/user?username={1}";
+        User user = restTemplate.getForObject(url, User.class, username);
         return user;
     }
+
     @Override
-    public PageInfo<QuestionVo> search(String key,
-                                       String username, Integer pageNum, Integer pageSize) {
-        if(pageNum==null) {
-            pageNum=1;
+    public PageInfo<QuestionVo> search(String key, String username, Integer pageNum, Integer pageSize) {
+        if (pageNum == null) {
+            pageNum = 1;
         }
-        if(pageSize==null) {
-            pageSize=8;
+        if (pageSize == null) {
+            pageSize = 8;
         }
-        User user=getUser(username);
+        User user = getUser(username);
         //Pageable可以内置排序规则
-        Pageable pageable= PageRequest.of(pageNum-1,
-                pageSize,Sort.Direction.DESC,"createtime");
-        Page<QuestionVo> page=questionRepository.queryAllByParams(
-                key,key,user.getId(),pageable);
-        Map<String,Tag> name2TagMap=getName2TagMap();
-        for(QuestionVo q:page.getContent()){
-            List<Tag> tags=tagNamesToTags(q.getTagNames());
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize, Sort.Direction.DESC, "createtime");
+
+        Page<QuestionVo> page = questionRepository.queryAllByParams(key, key, user.getId(), pageable);
+        Map<String, Tag> name2TagMap = getName2TagMap();
+        for (QuestionVo q : page.getContent()) {
+            List<Tag> tags = tagNamesToTags(q.getTagNames());
             q.setTags(tags);
         }
         return Pages.pageInfo(page);
     }
 
     //编写一个方法,从faq中获得所有标签,然后将这些标签转换为map
-    private final Map<String, Tag> name2TagMap=
+    private final Map<String, Tag> name2TagMap =
             new ConcurrentHashMap<>();
-    private Map<String,Tag> getName2TagMap(){
-        if(name2TagMap.isEmpty()){
-            synchronized (name2TagMap){
-                if (name2TagMap.isEmpty()){
-                    String url="http://faq-service/v1/tags/list";
-                    Tag[] tags=restTemplate.getForObject(
-                            url,Tag[].class);
-                    for(Tag t: tags){
-                        name2TagMap.put(t.getName(),t);
+
+    private Map<String, Tag> getName2TagMap() {
+        if (name2TagMap.isEmpty()) {
+            synchronized (name2TagMap) {
+                if (name2TagMap.isEmpty()) {
+                    String url = "http://faq-service/v1/tags/list";
+                    Tag[] tags = restTemplate.getForObject(
+                            url, Tag[].class);
+                    for (Tag t : tags) {
+                        name2TagMap.put(t.getName(), t);
                     }
                 }
             }
@@ -100,14 +99,14 @@ public class QuestionServiceImpl implements IQuestionService {
         return name2TagMap;
     }
 
-    private List<Tag> tagNamesToTags(String tagNames){
+    private List<Tag> tagNamesToTags(String tagNames) {
         //拆分字符串
-        String[] names=tagNames.split(",");
+        String[] names = tagNames.split(",");
         //调用上面的方法获得所有的标签
-        Map<String,Tag> name2TagMap=getName2TagMap();
-        List<Tag> tags=new ArrayList<>();
-        for(String name:names){
-            Tag t=name2TagMap.get(name);
+        Map<String, Tag> name2TagMap = getName2TagMap();
+        List<Tag> tags = new ArrayList<>();
+        for (String name : names) {
+            Tag t = name2TagMap.get(name);
             tags.add(t);
         }
         return tags;

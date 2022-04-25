@@ -35,6 +35,7 @@ public class HomeController {
         }
         return null;
     }
+
     //访问学生提问页面的方法
     @GetMapping("/question/create.html")
     public ModelAndView create(){

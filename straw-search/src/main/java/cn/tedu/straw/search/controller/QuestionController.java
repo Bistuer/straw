@@ -25,18 +25,15 @@ public class QuestionController {
     @PostMapping
     public R<PageInfo<QuestionVo>> search(String key
             , Integer pageNum
-            , @AuthenticationPrincipal UserDetails userDetails){
-        if(key==null) {
-            key="";
+            , @AuthenticationPrincipal UserDetails userDetails) {
+        if (key == null) {
+            key = "";
         }
-        Integer pageSize=8;
-        PageInfo<QuestionVo> pageInfo=questionService.search(
-                key,userDetails.getUsername(),pageNum,pageSize);
+        Integer pageSize = 8;
+        PageInfo<QuestionVo> pageInfo = questionService.search(
+                key, userDetails.getUsername(), pageNum, pageSize);
         return R.ok(pageInfo);
 
     }
-
-
-
 
 }

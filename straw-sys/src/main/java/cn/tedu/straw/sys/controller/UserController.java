@@ -45,7 +45,7 @@ public class UserController {
     @GetMapping("/me")
     public R<UserVo> me(
             @AuthenticationPrincipal User user){
-        UserVo userVo=userService.currentUserVo(user.getUsername());
+        UserVo userVo = userService.currentUserVo(user.getUsername());
         return R.ok(userVo);
     }
 
@@ -59,10 +59,6 @@ public class UserController {
                 list=userService.getMasters();
         return R.ok(list);
     }
-
-
-
-
 
 
 }

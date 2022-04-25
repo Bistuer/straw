@@ -15,4 +15,7 @@ public class SecurityConfig
         http.csrf().disable().authorizeRequests()
                 .anyRequest().permitAll();
     }
+
+
+
 }

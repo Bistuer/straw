@@ -22,12 +22,16 @@ public class Item {
     @Field(type = FieldType.Text,analyzer = "ik_smart"
             ,searchAnalyzer = "ik_smart")
     private String title;
+
     @Field(type=FieldType.Keyword)
     private String category;
+
     @Field(type=FieldType.Keyword)
     private String brand;
+
     @Field(type=FieldType.Double)
     private Double price;
+
     @Field(type=FieldType.Keyword,index=false)
     private String images;
 

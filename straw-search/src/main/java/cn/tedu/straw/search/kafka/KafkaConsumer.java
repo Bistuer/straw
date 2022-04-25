@@ -15,16 +15,17 @@ import javax.annotation.Resource;
 @Slf4j
 public class KafkaConsumer {
 
-    private Gson gson=new Gson();
+    private Gson gson = new Gson();
 
     @Resource
     private IQuestionService questionService;
 
     @KafkaListener(topics = Topic.QUESTIONS)
-    public void receiveQuestion(ConsumerRecord<String,String> record) {
+    public void receiveQuestion(ConsumerRecord<String, String> record) {
         String json = record.value();
         QuestionVo questionVo = gson.fromJson(json, QuestionVo.class);
         log.debug("收到问题{},开始新增", questionVo);
         questionService.saveQuestion(questionVo);
     }
+
 }

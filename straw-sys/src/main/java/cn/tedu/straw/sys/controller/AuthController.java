@@ -40,10 +40,6 @@ public class AuthController {
         return userService.getUserRoles(userId);
     }
 
-
-
-
-
 }
 
 

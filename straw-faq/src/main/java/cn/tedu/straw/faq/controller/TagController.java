@@ -22,14 +22,14 @@ public class TagController {
 
     //查询所有标签@GetMapping("")表示使用类上声明的前缀就可以访问这个方法
     @GetMapping("")
-    public R<List<Tag>> tags(){
-        List<Tag> list=tagService.getTags();
+    public R<List<Tag>> tags() {
+        List<Tag> list = tagService.getTags();
         return R.ok(list);
     }
 
     //为其它微服务提供的查询所有标签的功能方法
     @GetMapping("/list")
-    public List<Tag> list(){
+    public List<Tag> list() {
         return tagService.getTags();
     }
 

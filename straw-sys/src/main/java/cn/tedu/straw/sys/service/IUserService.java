@@ -26,6 +26,7 @@ public interface IUserService extends IService<User> {
 
     //查询所有老师用户的方法
     List<User> getMasters();
+
     //查询所有老师用户的Map方法
     Map<String,User> getMasterMap();
 
@@ -41,12 +42,5 @@ public interface IUserService extends IService<User> {
 
     //根据用户id获得角色
     List<Role> getUserRoles(Integer userId);
-
-
-
-
-
-
-
 
 }

@@ -14,10 +14,11 @@ import javax.annotation.Resource;
 class StrawKafkaApplicationTests {
 
     @KafkaListener(topics = "MyTopic")
-    public void abc(ConsumerRecord<String,String> record){
-        String json=record.value();
-        log.debug("接收信息:{}",json);
+    public void abc(ConsumerRecord<String, String> record) {
+        String json = record.value();
+        log.debug("接收信息:{}", json);
     }
+
     @Test
     void contextLoads() {
 

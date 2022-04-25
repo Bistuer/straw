@@ -54,5 +54,4 @@ public class Classroom implements Serializable {
     @TableField("modifytime")
     private LocalDateTime modifytime;
 
-
 }

@@ -64,5 +64,4 @@ public class Comment implements Serializable {
     @TableField("createtime")
     private LocalDateTime createtime;
 
-
 }
